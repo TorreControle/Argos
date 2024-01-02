@@ -106,7 +106,7 @@ namespace ArgosAutomation
             // Verificação de usuário.
             if (ChatId == long.Parse((string)dt.Rows[0]["ID"]))
             {
-                // Verifica o tipo de atualização enviada
+                // Verifica o tipo de atualização enviada.
                 // Mensagem de texto.
                 Console.WriteLine(@$"    Chat ID correspondente permitido: {long.Parse((string)dt.Rows[0]["ID"])}.");
                 if (update.Message.Type == MessageType.Text)
