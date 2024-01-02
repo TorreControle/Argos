@@ -8,7 +8,6 @@ namespace ArgosDot
     public class CommandHandler
     {
         private readonly ICommand _command;
-
         public string ActivatorCommand { get; set; }
         public string ResponseText { get; set; }
         public bool IsCompleted { get; set; }
@@ -36,7 +35,7 @@ namespace ArgosDot
                 //
                 await TextToSpeech.ToSpeak(Utilities.Directory.Audio.Output);
             }
-            catch (Exception ex)
+            catch (Exception)
             {
 
             }

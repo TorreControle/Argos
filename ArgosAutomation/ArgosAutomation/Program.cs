@@ -11,7 +11,7 @@ namespace ArgosAutomation
 {
     public class Program
     {
-        //
+        // 
         private static StdSchedulerFactory factory = new();
         private static IJobDetail? job;
         private static ITrigger? trigger;
