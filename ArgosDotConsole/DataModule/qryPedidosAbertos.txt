@@ -1,0 +1,7 @@
+﻿select
+    count(DISTINCT(pedido)) as PEDIDO
+from
+    hive_metastore.ouro_operacao_cd.operacao_cd_fato_pedidos as ped
+where
+    isnull(ped.FIM_CONFERENCIA)
+    and year(ped.data_interface) = '2023'

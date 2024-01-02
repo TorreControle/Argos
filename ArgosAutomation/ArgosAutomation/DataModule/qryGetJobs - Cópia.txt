@@ -1,0 +1,7 @@
+﻿SELECT 
+	a.ID ,
+	a.NOME,
+	b.HORA,
+	a.EXPRESSAO_CRON
+FROM argos.t_trabalho_divulgacao_automation a
+	join argos.t_horario_divulgacao_automation b on a.ID = b.ID;

@@ -1,0 +1,3 @@
+﻿UPDATE argos.t_painel_automation
+SET GERANDO = ":VALUE"
+WHERE ID = ":ID";

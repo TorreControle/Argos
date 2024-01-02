@@ -1,0 +1,9 @@
+﻿SELECT 
+	a.ID as ID,
+	a.COMANDO as COMANDO,
+	a.NOME as NOME,
+	b.OPERACAO,
+	a.ATIVO as ATIVO,
+	a.GERANDO as GERANDO
+FROM argos.t_painel_automation a
+join argos.t_grupo_telegram b on b.CHAT_ID = a.CHAT_ID ;

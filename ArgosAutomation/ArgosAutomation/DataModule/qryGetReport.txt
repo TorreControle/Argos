@@ -1,0 +1,4 @@
+﻿select 
+	* 
+from argos.t_painel_automation a
+where a.ID = ":ID";

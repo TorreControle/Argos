@@ -1,0 +1,14 @@
+﻿select 
+	a.ID as ID,
+	a.COMANDO as COMANDO,
+	a.NOME as NOME_PAINEL,
+	a.LINK as LINK,
+	b.CHAT_ID as CHAT_ID_GRUPO,
+	b.NOME as NOME_GRUPO,
+	b.OPERACAO as VERTICAL_NEGOCIO,
+	a.TIPO_ENVIO as TIPO_ENVIO,
+	a.ATIVO as ATIVO,
+	a.GERANDO as GERANDO
+from argos.t_painel_automation a
+	join argos.t_grupo_telegram b on b.CHAT_ID = a.CHAT_ID  
+where a.COMANDO = ':COMANDO';

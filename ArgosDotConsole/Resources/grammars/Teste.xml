@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<grammar version="1.0" xml:lang="pt-BR"  
+         xmlns="http://www.w3.org/2001/06/grammar"  
+         tag-format="semantics/1.0" root="Main">  
+
+  <!-- cities.xml: Define uma gramática SRGS para solicitar a quantidade de pedidos em doca por unidade. Essa gramática inclui uma regra de unidades que lista as unidades que podem ser usadas para solicitação. -->  
+
+  <rule id="Main">  
+    <item>  
+     argos pedidos em doca no <ruleref uri="#Unidades"/> 
+    </item>  
+  </rule>  
+
+  <rule id="Unidades" scope="public">  
+    <one-of>  
+      <item> CD ALPHAVILLE </item>
+      <item> CD CURITIBA </item>
+      <item> CD TECNOPARK </item>
+      <item> CD SJP </item>
+      <item> CD GUARULHOS </item>
+      <item> CD AG2 </item>
+      <item> CD ITAJAÍ 3 </item>
+      <item> CD BARUERI 2 </item>
+      <item> CD SUMARÉ 1 </item>
+      <item> CD ITAJAÍ 5 </item>
+      <item> CD JOINVILLE 1 </item>
+      <item> CD MAUÁ 1 </item>
+      <item> CD ARAQUARI 1 </item>  
+    </one-of>  
+  </rule>  
+</grammar>  
