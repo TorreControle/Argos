@@ -335,6 +335,20 @@ Data e hora: {MessageDate}",
 
             }
 
+            // Grava todas as mensagens que o Argos recebe no banco de dados.
+            Odbc.Connect("ArgosAutomation", "DSN=SRVAZ31-ARGOS");
+            qry = "qryInsertUpdates.txt";
+            Odbc.dtm.CleanParamters(qry);
+            Odbc.dtm.ParamByName(qry, ":ID_TABELA", Guid.NewGuid().ToString());
+            Odbc.dtm.ParamByName(qry, ":ATUALIZACAO_ID", UpdateId.ToString());
+            Odbc.dtm.ParamByName(qry, ":ID_USUARIO", UserId.ToString());
+            Odbc.dtm.ParamByName(qry, ":CHAT_ID", ChatId.ToString());
+            Odbc.dtm.ParamByName(qry, ":TITULO_CHAT", ChatTitle);
+            Odbc.dtm.ParamByName(qry, ":TEXTO", MessageText);
+            Odbc.dtm.ParamByName(qry, ":NOME", $"{FirstName} {LastName}");
+            Odbc.dtm.ParamByName(qry, ":USUARIO", UserName);
+            Odbc.dtm.ExecuteNonQuery(qry);
+            Console.WriteLine(@$" [{DateTime.Now:dd/MM/yyyy - HH:mm:ss}] UpdateHandler: Insert na tabela argos.t_atualizacao_recebida_telegram da atualizaçao nº {MessageId} feito as {DateTime.Now:HH:mm:ss} foi realizado com exito.");
             Console.WriteLine(" ");
         }
     }

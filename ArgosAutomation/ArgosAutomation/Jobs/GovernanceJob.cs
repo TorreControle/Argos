@@ -30,27 +30,27 @@ namespace ArgosAutomation.Jobs
         /// </summary>
         public static string? TriggerGroup { get; set; }
         /// <summary>
-        /// 
+        /// Horário em que o trabalho é executado.
         /// </summary>
         public static string? Time { get; set; }
         /// <summary>
-        /// 
+        /// Id do painel em questão.
         /// </summary>
         public int? ReportId { get; set; }
         /// <summary>
-        /// 
+        /// Nome do painel em questão
         /// </summary>
         public string? ReportName { get; set; }
         /// <summary>
-        /// 
+        /// Chat Id do grupo do painel em questão.
         /// </summary>
         public long? ReportChatId { get; set; }
         /// <summary>
-        /// 
+        /// Grupo de dados em que o BI está alocado.
         /// </summary>
         public string? GroupData { get; set; }
         /// <summary>
-        /// 
+        /// Script da query de governança.
         /// </summary>
         public string? Script { get; set; }
 
@@ -114,6 +114,7 @@ Trabalho que faz parte do grupo {JobGroup} está sendo executado as *{DateTime.N
                     Odbc.dtm.ParamByName(qry, ":SCRIPT", Script);
                     DataTable dts = Odbc.dtm.ExecuteQuery(qry);
                     int outdated = Tools.HasTrueValueInColumn(dts, "ALERTA");
+                    //outdated = 0;
                     //Odbc.dtm.Disconect();
 
                     // Se houver algum valor = 1 o painel em questão é desativado.

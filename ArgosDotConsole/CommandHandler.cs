@@ -7,6 +7,7 @@ namespace ArgosDot
 {
     public class CommandHandler
     {
+        //
         private readonly ICommand _command;
         public string ActivatorCommand { get; set; }
         public string ResponseText { get; set; }
