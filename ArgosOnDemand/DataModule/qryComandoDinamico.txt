@@ -1,0 +1,48 @@
+﻿SELECT
+  'SELECT' || ' ' || case
+    when substr (
+      ":MESSAGETEXT",
+      instr(
+        ":MESSAGETEXT",
+        'quantos'
+      ),
+      7
+    ) = 'quantos' then 'COUNT(DISTINCT(' || substr(
+      ":MESSAGETEXT",
+      instr(
+        ":MESSAGETEXT",
+        'pedidos'
+      ),
+      6
+    ) || '))' || ' FROM hive_metastore.ouro_operacao_cd.operacao_cd_fato_pedidos' || ' WHERE LIKE'
+  end AS Selecti,
+  case
+    when substr (
+      ":MESSAGETEXT",
+      (
+        instr(
+          ":MESSAGETEXT",
+          'da '
+        ) + 3
+      ),
+      10
+    ) = substr (
+      ":MESSAGETEXT",
+      (
+        instr(
+          ":MESSAGETEXT",
+          'da '
+        ) + 3
+      ),
+      10
+    ) then substr (
+      ":MESSAGETEXT",
+      (
+        instr(
+          ":MESSAGETEXT",
+          'da '
+        ) + 3
+      ),
+      10
+    )
+  end AS Wheri;

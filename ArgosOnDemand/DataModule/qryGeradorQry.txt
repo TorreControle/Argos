@@ -1,0 +1,5 @@
+﻿select
+  *
+from
+  hive_metastore.ouro_operacao_cd.operacao_cd_fato_pedidos
+limit 20;

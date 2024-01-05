@@ -1,0 +1,114 @@
+﻿select
+  'O perfil do pedido nº '
+  || ':PEDIDO '
+  || 'da '
+  || x.Cliente
+  || ' na nossa unidade '
+  || x.Unidade
+  || ' é de ' 
+  || Round(avg(x.perfil)) 
+  || ' peças por linhas e o tempo médio de separação desse perfil é de ' 
+  || ROUND(avg(x.tempo)) || ' horas' as Tempo
+
+from(
+    select
+      distinct(ped.NOME) as Cliente,
+      CASE
+        WHEN ped.site = 'ALP' THEN 'CD Barueri'
+        WHEN ped.site = 'CTB' THEN 'CD Curitiba'
+        WHEN ped.site = 'KLA' THEN 'CD Tecnopark Itajaí'
+        WHEN ped.site = 'KLE' THEN 'CD Tecnopark Itajaí'
+        WHEN ped.site = 'MTLG-SC001' THEN 'CD Tecnopark Itajaí'
+        WHEN ped.site = 'MTLG-PR001' THEN 'São José Dos Pinhais'
+        WHEN ped.site = 'MTLG-SP002' THEN 'CD Guarulhos'
+        WHEN ped.site = 'MTLG-PR002' THEN 'CD Curitiba'
+        WHEN ped.site = 'MTLG-SC002' THEN 'CD Ag2 Itajaí'
+        WHEN ped.site = 'MTLG-SC003' THEN 'CD Itajaí 3'
+        WHEN ped.site = 'MTLG-SP001' THEN 'CD Barueri'
+        WHEN ped.site = 'M01' THEN 'CD Tecnopark Itajaí'
+        WHEN ped.site = 'M02' THEN 'CD Ag2 Itajaí'
+        WHEN ped.site = 'M03' THEN 'CD Ag2 Itajaí'
+        WHEN ped.site = 'M04' THEN 'CD Curitiba'
+        WHEN ped.site = 'M05' THEN 'CD Curitiba'
+        WHEN ped.site = 'M06' THEN 'CD Curitiba'
+        WHEN ped.site = 'M07' THEN 'São José Dos Pinhais'
+        WHEN ped.site = 'M09' THEN 'CD Guarulhos'
+        WHEN ped.site = '40' THEN 'CD Barueri 2'
+        WHEN ped.site = '41' THEN 'CD Barueri 2'
+        WHEN ped.site = 'MTLG-PR003' THEN 'CD Curitiba'
+        WHEN ped.site = '45' THEN 'CD Sumaré 1'
+        WHEN ped.site = '46' THEN 'CD Itajaí 5'
+        WHEN ped.site = '48' THEN 'CD Joinville 1'
+        WHEN ped.site = '49' THEN 'CD Mauá 1'
+        WHEN ped.site = '50' THEN 'CD Araquari 1'
+        ELSE ped.site
+      end as Unidade,
+      ped.PEDIDO,
+      count(distinct(ped.PRODUTO)) as Linhas,
+      sum(ped.QTD_CONF) as Pecas,
+      sum(ped.QTD_CONF) / count(distinct(ped.PRODUTO)) as Perfil,
+      -- max(ped.FIM_CONFERENCIA) - min(ped.DATA_INTERFACE) as tempo,
+      date_diff(hour, ped.DATA_INTERFACE, ped.FIM_CONFERENCIA) as tempo,
+      date_diff(ped.FIM_CONFERENCIA, ped.DATA_INTERFACE)
+    from
+      ouro_operacao_cd.operacao_cd_fato_pedidos ped
+    where
+      year(ped.DATA_INTERFACE) >= 2023
+    group by
+      ped.NOME,
+      ped.SITE,
+      ped.PEDIDO,
+      ped.FIM_CONFERENCIA,
+      ped.DATA_INTERFACE
+  ) x
+where
+  x.Linhas BETWEEN (
+    select
+      (
+        (
+          round(
+            count(distinct(sub.PRODUTO)) -(count(distinct(sub.PRODUTO))) * 0.10,
+            0
+          )
+        )
+      ) as Linhas
+    from
+      ouro_operacao_cd.operacao_cd_fato_pedidos sub
+    where
+      sub.PEDIDO = ':PEDIDO'
+  )
+  AND (
+    select
+      round(
+        ((count(distinct(sub.PRODUTO))) * 0.10) + (count(distinct(sub.PRODUTO)))
+      ) as Linhas
+    from
+      ouro_operacao_cd.operacao_cd_fato_pedidos sub
+    where
+      sub.PEDIDO = ':PEDIDO'
+  )
+  and x.Pecas BETWEEN (
+    select
+      (
+        round(
+          sum(sub.QTD_CONF) - (sum(sub.QTD_CONF) * 0.10),
+          0
+        )
+      ) as Linhas
+    from
+      ouro_operacao_cd.operacao_cd_fato_pedidos sub
+    where
+      sub.PEDIDO = ':PEDIDO'
+  )
+  AND (
+    select
+      round(
+        (sum(sub.QTD_CONF) * 0.10) + (sum(sub.QTD_CONF))
+      ) as Linhas
+    from
+      ouro_operacao_cd.operacao_cd_fato_pedidos sub
+    where
+      sub.PEDIDO = ':PEDIDO'
+  )
+  and x.cliente like '%:CLIENTE%'
+ group by x.Cliente, x.Unidade

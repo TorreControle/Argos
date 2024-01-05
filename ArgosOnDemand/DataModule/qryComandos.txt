@@ -1,0 +1,6 @@
+﻿select
+	*
+from
+	argos.t_comandos_demand tcd
+where
+	tcd.comando = ':MESSAGETEXT'

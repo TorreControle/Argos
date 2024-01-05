@@ -1,0 +1,6 @@
+﻿select
+	coalesce((select cad.NOME from argos.t_cadastro_motorista_demand as cad where cad.CPF  = ':CPF'), 'Sem cadastro') as NOME,
+	coalesce((select cadi.CPF from argos.t_cadastro_motorista_demand as cadi where cadi.CPF  = ':CPF'), 'Sem cadastro') as CPF,
+	coalesce((select cade.ID_TELEGRAM from argos.t_cadastro_motorista_demand as cade where cade.CPF  = ':CPF'), 'Sem cadastro') as ID_TELEGRAM
+from
+	argos.t_cadastro_motorista_demand;

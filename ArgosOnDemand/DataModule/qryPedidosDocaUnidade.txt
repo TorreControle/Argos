@@ -1,0 +1,53 @@
+﻿select
+  distinct(upper(x.unidade)) as unidade,
+  sum(x.pedidos_doca) AS pedidos_doca,
+  ROUND(avg(x.media_tempo), 2) AS media_tempo
+from(SELECT
+        CASE
+            WHEN ped.site = 'ALP' THEN 'CD ALPHAVILLE'
+            WHEN ped.site = 'CTB' THEN 'CD CURITIBA'
+            WHEN ped.site = 'KLA' THEN 'CD TECNOPARK'
+            WHEN ped.site = 'KLE' THEN 'CD TECNOPARK'
+            WHEN ped.site = 'MTLG-SC001' THEN 'CD TECNOPARK'
+            WHEN ped.site = 'MTLG-PR001' THEN 'CD SJP'
+            WHEN ped.site = 'MTLG-SP002' THEN 'CD GUARULHOS'
+            WHEN ped.site = 'MTLG-PR002' THEN 'CD CURITIBA'
+            WHEN ped.site = 'MTLG-SC002' THEN 'CD AG2'
+            WHEN ped.site = 'MTLG-SC003' THEN 'CD ITAJAÍ 3'
+            WHEN ped.site = 'MTLG-SC004' THEN 'AGQ'
+            WHEN ped.site = 'MTLG-SP001' THEN 'CD ALPHAVILLE'
+            WHEN ped.site = 'M01' THEN 'CD TECNOPARK'
+            WHEN ped.site = 'M02' THEN 'CD AG2'
+            WHEN ped.site = 'M03' THEN 'CD AG2'
+            WHEN ped.site = 'M04' THEN 'CD CURITIBA'
+            WHEN ped.site = 'M05' THEN 'CD CURITIBA'
+            WHEN ped.site = 'M06' THEN 'CD CURITIBA'
+            WHEN ped.site = 'M07' THEN 'CD SJP'
+            WHEN ped.site = 'M09' THEN 'CD GUARULHOS'
+            WHEN ped.site = '40' THEN 'CD BARUERI 2'
+            WHEN ped.site = '41' THEN 'CD BARUERI 2'
+            WHEN ped.site = 'MTLG-PR003' THEN 'CD CURITIBA'
+            WHEN ped.site = '45' THEN 'CD SUMARÉ 1'
+            WHEN ped.site = '46' THEN 'CD ITAJAÍ 5'
+            WHEN ped.site = '48' THEN 'CD JOINVILLE 1'
+            WHEN ped.site = '49' THEN 'CD MAUÁ 1'
+            WHEN ped.site = '50' THEN 'CD ARAQUARI 1'
+        ELSE ped.site
+        END AS unidade,
+        COUNT(DISTINCT(ped.pedido)) AS pedidos_doca,
+        ROUND(AVG(DATEDIFF(NOW(), ped.fim_conferencia)), 1) AS media_tempo
+    FROM
+        ouro_operacao_cd.operacao_cd_fato_pedidos ped
+    WHERE
+        ped.fim_conferencia IS NOT NULL
+        and ped.DT_EMBARQUE is null
+        and ped.STATUS NOT IN ('Cancelado')
+        and ped.data_expedicao IS NULL
+    GROUP BY
+        ped.site
+    ) x
+where x.unidade = ':UNIDADE'
+group by
+    x.unidade
+ORDER BY
+    2 DESC

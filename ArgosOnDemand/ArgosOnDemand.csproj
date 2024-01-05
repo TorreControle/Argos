@@ -1,0 +1,102 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net6.0-windows</TargetFramework>
+    <Nullable>enable</Nullable>
+    <UseWindowsForms>true</UseWindowsForms>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <ApplicationIcon>ico\Logo-Argos-BR.ico</ApplicationIcon>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="Commands\Class1.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Remove="DataModule\%40.txt" />
+    <None Remove="DataModule\qryAnaliseDemandaCD.txt" />
+    <None Remove="DataModule\qryComandoDinamico.txt" />
+    <None Remove="DataModule\qryComandos.txt" />
+    <None Remove="DataModule\qryComandosDatabricks.txt" />
+    <None Remove="DataModule\qryConsultaCESV.txt" />
+    <None Remove="DataModule\qryConsultaCTE.txt" />
+    <None Remove="DataModule\qryGeradorQry.txt" />
+    <None Remove="DataModule\qryInsereNovaSenha.txt" />
+    <None Remove="DataModule\qryObtemSenha.txt" />
+    <None Remove="DataModule\qryPedidosDoca.txt" />
+    <None Remove="DataModule\qryPedidosDocaUnidade.txt" />
+    <None Remove="DataModule\qryPerfilPedido.txt" />
+    <None Remove="DataModule\qryPermissoes.txt" />
+    <None Remove="DataModule\qryStatusPedido.txt" />
+    <None Remove="DataModule\qryTabComandos.txt" />
+    <None Remove="DataModule\qryTeste.txt" />
+    <None Remove="DataModule\qryValidaCadastroMotorista.txt" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="ico\Logo-Argos-BR.ico" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Include="DataModule\qryPerfilPedido.txt" />
+    <EmbeddedResource Include="DataModule\qryGeradorQry.txt" />
+    <EmbeddedResource Include="DataModule\qryAnaliseDemandaCD.txt" />
+    <EmbeddedResource Include="DataModule\qryInsereNovaSenha.txt" />
+    <EmbeddedResource Include="DataModule\qryObtemSenha.txt" />
+    <EmbeddedResource Include="DataModule\qryValidaCadastroMotorista.txt" />
+    <EmbeddedResource Include="DataModule\@.txt" />
+    <EmbeddedResource Include="DataModule\qryComandoDinamico.txt" />
+    <EmbeddedResource Include="DataModule\qryComandos.txt" />
+    <EmbeddedResource Include="DataModule\qryConsultaCESV.txt" />
+    <EmbeddedResource Include="DataModule\qryConsultaCTE.txt" />
+    <EmbeddedResource Include="DataModule\qryPedidosDoca.txt" />
+    <EmbeddedResource Include="DataModule\qryPedidosDocaUnidade.txt" />
+    <EmbeddedResource Include="DataModule\qryPermissoes.txt" />
+    <EmbeddedResource Include="DataModule\qryComandosDatabricks.txt" />
+    <EmbeddedResource Include="DataModule\qryStatusPedido.txt" />
+    <EmbeddedResource Include="DataModule\qryTabComandos.txt" />
+    <EmbeddedResource Include="DataModule\qryTeste.txt" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="..\.editorconfig" Link=".editorconfig" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Betalgo.OpenAI.GPT3" Version="6.8.4" />
+    <PackageReference Include="ChatGPT.Net" Version="2.0.0" />
+    <PackageReference Include="EnvDTE" Version="17.8.37221" />
+    <PackageReference Include="MySql.Data" Version="8.2.0" />
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
+    <PackageReference Include="OpenAI" Version="1.10.0" />
+    <PackageReference Include="Oracle.ManagedDataAccess" Version="21.13.0" />
+    <PackageReference Include="Plotly.NET.CSharp" Version="0.11.1" />
+    <PackageReference Include="Plotly.NET.ImageExport" Version="5.0.1" />
+    <PackageReference Include="QRCoder" Version="1.4.3" />
+    <PackageReference Include="QuickChart" Version="2.3.0" />
+    <PackageReference Include="System.Data.Odbc" Version="8.0.0" />
+    <PackageReference Include="System.Data.OleDb" Version="8.0.0" />
+    <PackageReference Include="System.Speech" Version="8.0.0" />
+    <PackageReference Include="Telegram.Bot" Version="18.0.0" />
+    <PackageReference Include="Telegram.Bots.Extensions.Polling" Version="5.9.0" />
+    <PackageReference Include="ZXing.Net.Mobile" Version="2.4.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Update="Properties\Resources.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Update="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+  </ItemGroup>
+
+</Project>

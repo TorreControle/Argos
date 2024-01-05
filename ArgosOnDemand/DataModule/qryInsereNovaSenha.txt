@@ -1,0 +1,2 @@
+﻿INSERT INTO argos.t_acesso_motorista_demand (SENHA, ID_TELEGRAM, NOME, CPF, PLACA, TIPO_ENTRADA, VALIDACAO_USER, VALIDACAO_DATA, QRCODE)
+select max(a.senha) + 1, ':ID', ':NOME', ':CPF', null, null, null, now(), null + 1 from argos.t_acesso_motorista_demand a;

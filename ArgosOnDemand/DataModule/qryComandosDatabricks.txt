@@ -1,0 +1,3 @@
+﻿select GATILHO, QUERY
+from apex.t_comandos_argos
+where TIPO_COMANDO = 'Consulta'

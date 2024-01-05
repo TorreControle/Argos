@@ -1,0 +1,20 @@
+﻿SELECT
+  DISTINCT(cesv_id) AS CESV,
+  cliente,
+  MIN(cesv_dt_entrada) AS DATA_CESV_ENTRADA,
+  MAX(cesv_dt_saida) AS DATA_CESV_FIM,
+  MAX (os_dt_deslacre) AS DATA_OS_DESLACRE,
+  MAX (doc_liberacao) AS DOC_LIBERACAO,
+  ROUND(MAX (doc_cif_us), 2) AS DOC_CIF_OS,
+  MAX(os_dt_inicio) AS DATA_OS_INICIO,
+  MAX(os_dt_termino) AS DATA_OS_FIM,
+  COUNT (qtd_lote) AS QTD_LOTE,
+  sis_nome_filial
+FROM
+  ouro_operacao_alfandegado.fato_operacao_alfandegado
+WHERE
+  cesv_id like '%:CESV%'
+GROUP BY
+  CESV,
+  cliente,
+  sis_nome_filial

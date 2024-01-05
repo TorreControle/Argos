@@ -1,0 +1,4 @@
+﻿select
+	*
+from
+	argos.t_comandos_demand tcd

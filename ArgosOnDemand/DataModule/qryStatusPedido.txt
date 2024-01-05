@@ -1,0 +1,58 @@
+﻿select CASE
+         WHEN ped.site = 'ALP' THEN 'CD Barueri'
+         WHEN ped.site = 'CTB' THEN 'CD Curitiba'
+         WHEN ped.site = 'KLA' THEN 'CD Tecnopark Itajaí'
+         WHEN ped.site = 'KLE' THEN 'CD Tecnopark Itajaí'
+         WHEN ped.site = 'MTLG-SC001' THEN 'CD Tecnopark Itajaí'
+         WHEN ped.site = 'MTLG-PR001' THEN 'São José Dos Pinhais'
+         WHEN ped.site = 'MTLG-SP002' THEN 'CD Guarulhos'
+         WHEN ped.site = 'MTLG-PR002' THEN 'CD Curitiba'
+         WHEN ped.site = 'MTLG-SC002' THEN 'CD Ag2 Itajaí'
+         WHEN ped.site = 'MTLG-SC003' THEN 'CD Itajaí 3'
+         WHEN ped.site = 'MTLG-SP001' THEN 'CD Barueri'
+         WHEN ped.site = 'M01' THEN 'CD Tecnopark Itajaí'
+         WHEN ped.site = 'M02' THEN 'CD Ag2 Itajaí'
+         WHEN ped.site = 'M03' THEN 'CD Ag2 Itajaí'
+         WHEN ped.site = 'M04' THEN 'CD Curitiba'
+         WHEN ped.site = 'M05' THEN 'CD Curitiba'
+         WHEN ped.site = 'M06' THEN 'CD Curitiba'
+         WHEN ped.site = 'M07' THEN 'São José Dos Pinhais'
+         WHEN ped.site = 'M09' THEN 'CD Guarulhos'
+         WHEN ped.site = '40' THEN 'CD Barueri 2'
+         WHEN ped.site = '41' THEN 'CD Barueri 2'
+         WHEN ped.site = 'MTLG-PR003' THEN 'CD Curitiba'
+         WHEN ped.site = '45' THEN 'CD Sumaré 1'
+         WHEN ped.site = '46' THEN 'CD Itajaí 5'
+         WHEN ped.site = '48' THEN 'CD Joinville 1'
+         WHEN ped.site = '49' THEN 'CD Mauá 1'
+         WHEN ped.site = '50' THEN 'CD Araquari 1'
+         ELSE ped.site
+       END AS UNIDADE,
+       ped.NOME,
+       ped.ID_CLIENTE,
+       ped.PEDIDO,
+       count(distinct(ped.PRODUTO)) AS TOTAL_PRODUTOS,
+       round(sum(ped.QTD_PREV)) AS QUANTIDADE,
+       datediff(max(nvl(ped.FIM_CONFERENCIA, now())), ped.DATA_INTEGRACAO) || ' dias' as TEMPO,
+       ped.STATUS,
+       min(ped.DATA_INTEGRACAO) DATA_INTEGRACAO,
+       max(ped.DATA_RESERVA) DATA_RESERVA,
+       max(ped.FIM_SEPARACAO) FIM_SEPARACAO,
+       max(ped.FIM_CONFERENCIA) FIM_CONFERENCIA,
+       max(ped.DT_SAIDA_GT100) DATA_EXPEDICAO,
+       ped.TRANSPORTADOR,
+       ped.CESV,
+       ped.source
+  from hive_metastore.ouro_operacao_cd.operacao_cd_fato_pedidos ped
+ where ped.PEDIDO like '%:PEDIDO%'
+   and ped.ID_CLIENTE like '%:CLIENTE%'
+ group by UNIDADE,
+          ped.SITE,
+          ped.NOME,
+          ped.ID_CLIENTE,
+          ped.PEDIDO,
+          ped.DATA_INTEGRACAO,
+          ped.STATUS,
+          ped.TRANSPORTADOR,
+          ped.CESV,
+          ped.source

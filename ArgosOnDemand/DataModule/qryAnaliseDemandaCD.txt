@@ -1,0 +1,54 @@
+﻿select
+  distinct(x.Mes) as Mes,
+  sum(x.Pedidos) as Pedidos,
+  sum(x.Linhas) as Linhas
+from
+  (
+    select
+      distinct(date_format(ped.DATA_INTERFACE, 'MM')) as Mes,
+      CASE
+        WHEN ped.site = 'ALP' THEN 'CD Barueri'
+        WHEN ped.site = 'CTB' THEN 'CD Curitiba'
+        WHEN ped.site = 'KLA' THEN 'CD Tecnopark Itajaí'
+        WHEN ped.site = 'KLE' THEN 'CD Tecnopark Itajaí'
+        WHEN ped.site = 'MTLG-SC001' THEN 'CD Tecnopark Itajaí'
+        WHEN ped.site = 'MTLG-PR001' THEN 'São José Dos Pinhais'
+        WHEN ped.site = 'MTLG-SP002' THEN 'CD Guarulhos'
+        WHEN ped.site = 'MTLG-PR002' THEN 'CD Curitiba'
+        WHEN ped.site = 'MTLG-SC002' THEN 'CD Ag2 Itajaí'
+        WHEN ped.site = 'MTLG-SC003' THEN 'CD Itajaí 3'
+        WHEN ped.site = 'MTLG-SP001' THEN 'CD Barueri'
+        WHEN ped.site = 'M01' THEN 'CD Tecnopark Itajaí'
+        WHEN ped.site = 'M02' THEN 'CD Ag2 Itajaí'
+        WHEN ped.site = 'M03' THEN 'CD Ag2 Itajaí'
+        WHEN ped.site = 'M04' THEN 'CD Curitiba'
+        WHEN ped.site = 'M05' THEN 'CD Curitiba'
+        WHEN ped.site = 'M06' THEN 'CD Curitiba'
+        WHEN ped.site = 'M07' THEN 'São José Dos Pinhais'
+        WHEN ped.site = 'M09' THEN 'CD Guarulhos'
+        WHEN ped.site = '40' THEN 'CD Barueri 2'
+        WHEN ped.site = '41' THEN 'CD Barueri 2'
+        WHEN ped.site = 'MTLG-PR003' THEN 'CD Curitiba'
+        WHEN ped.site = '45' THEN 'CD Sumaré 1'
+        WHEN ped.site = '46' THEN 'CD Itajaí 5'
+        WHEN ped.site = '48' THEN 'CD Joinville 1'
+        WHEN ped.site = '49' THEN 'CD Mauá 1'
+        WHEN ped.site = '50' THEN 'CD Araquari 1'
+        ELSE ped.site
+      END AS unidade,
+      count(distinct(ped.PEDIDO)) as Pedidos,
+      sum(ped.QTD_PREV) as Peca,
+      count(DISTINCT(ped.PRODUTO)) as Linhas
+    from
+      ouro_operacao_cd.operacao_cd_fato_pedidos ped
+    where
+      date_format(ped.DATA_INTERFACE, 'yyyy') = date_format(getdate(), 'yyyy')
+    group by
+      (ped.DATA_INTERFACE),
+      ped.site
+  ) x
+  where x.unidade = ':UNIDADE'
+group by
+  x.Mes
+order by
+  1

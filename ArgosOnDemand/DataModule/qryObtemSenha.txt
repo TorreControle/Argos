@@ -1,0 +1,2 @@
+﻿SELECT max(SENHA) as SENHA
+FROM argos.t_acesso_motorista_demand;
