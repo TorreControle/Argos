@@ -44,7 +44,7 @@ namespace ArgosAutomation.Jobs
         /// <summary>
         /// Chat Id do grupo do painel em questão.
         /// </summary>
-        public long? ReportChatId { get; set; }
+        public List<long?> ChatIdGroup = new();
         /// <summary>
         /// Grupo de dados em que o BI está alocado.
         /// </summary>
@@ -100,7 +100,6 @@ Trabalho que faz parte do grupo {JobGroup} está sendo executado as *{DateTime.N
                     // Atribui os valores pertencentes a queries.
                     ReportId = int.Parse((string)dt.Rows[i]["PAINEL_ID"]);
                     ReportName = (string)dt.Rows[i]["NOME_PAINEL"];
-                    ReportChatId = long.Parse((string)dt.Rows[i]["CHAT_ID"]);
                     GroupData = (string)dt.Rows[i]["GRUPO_DADOS"];
                     Script = (string)dt.Rows[i]["SCRIPT"];
 
@@ -114,9 +113,21 @@ Trabalho que faz parte do grupo {JobGroup} está sendo executado as *{DateTime.N
                     Odbc.dtm.ParamByName(qry, ":SCRIPT", Script);
                     DataTable dts = Odbc.dtm.ExecuteQuery(qry);
                     int outdated = Tools.HasTrueValueInColumn(dts, "ALERTA");
-                    //outdated = 0;
-                    //Odbc.dtm.Disconect();
 
+                    //
+                    Odbc.Connect("ArgosAutomation", "DSN=SRVAZ31-ARGOS");
+                    qry = "qryGetGroupQueriesGovernance.txt";
+                    Odbc.dtm.CleanParamters(qry);
+                    Odbc.dtm.ParamByName(qry, ":ID", ReportId.ToString());
+                    DataTable dtx = Odbc.dtm.ExecuteQuery(qry);
+
+                    for (int j = 0; j < dtx.Rows.Count; j++)
+                    {
+                        ChatIdGroup.Add(long.Parse((string)dtx.Rows[j]["CHAT_ID_GROUP"]));
+                    }
+
+
+                    //outdated = 0;
                     // Se houver algum valor = 1 o painel em questão é desativado.
                     if (outdated == 1)
                     {
@@ -130,11 +141,11 @@ Trabalho que faz parte do grupo {JobGroup} está sendo executado as *{DateTime.N
                         qry = "qryGetReport.txt";
                         Odbc.dtm.CleanParamters(qry);
                         Odbc.dtm.ParamByName(qry, ":ID", ReportId.ToString());
-                        DataTable dtx = Odbc.dtm.ExecuteQuery(qry);
+                        DataTable dtc = Odbc.dtm.ExecuteQuery(qry);
                         //Odbc.dtm.Disconect();
 
                         // Verifica se ele já está desativado ou não.
-                        if (dtx.Rows[0]["ATIVO"].ToString() != "0")
+                        if (dtc.Rows[0]["ATIVO"].ToString() != "0")
                         {
                             // Atualiza o valor do painel em questão na coluna "ATIVO".
                             Odbc.Connect("ArgosAutomation", "DSN=SRVAZ31-ARGOS");
@@ -150,12 +161,17 @@ Trabalho que faz parte do grupo {JobGroup} está sendo executado as *{DateTime.N
                             Console.ForegroundColor = ConsoleColor.Gray;
                             //Odbc.dtm.Disconect();
 
-                            // Faz um alerta no grupo pertencente ao painel em questão.
-                            await Utilities.botClient.SendTextMessageAsync(
-                                chatId: ReportChatId,
-                                text: @$"🤖: Os dados de *{GroupData}* estão desatualizados, o painel de *{ReportName}* foi desativado ⚠️.",
-                                parseMode: ParseMode.Markdown,
-                                cancellationToken: Utilities.cts);
+                            for (int j = 0; j < dtx.Rows.Count; j++)
+                            {
+                                // Faz um alerta no grupo pertencente ao painel em questão.
+                                await Utilities.botClient.SendTextMessageAsync(
+                                    chatId: ChatIdGroup[j],
+                                    text: @$"🤖: Os dados de *{GroupData}* estão desatualizados, o painel de *{ReportName}* foi desativado ⚠️.",
+                                    parseMode: ParseMode.Markdown,
+                                    cancellationToken: Utilities.cts);
+
+                            }
+
 
                         }
                     }
@@ -168,11 +184,11 @@ Trabalho que faz parte do grupo {JobGroup} está sendo executado as *{DateTime.N
                         qry = "qryGetReport.txt";
                         Odbc.dtm.CleanParamters(qry);
                         Odbc.dtm.ParamByName(qry, ":ID", ReportId.ToString());
-                        DataTable dtx = Odbc.dtm.ExecuteQuery(qry);
+                        DataTable dtc = Odbc.dtm.ExecuteQuery(qry);
                         //Odbc.dtm.Disconect();
 
                         // Verifica se ele já está desativado ou não.
-                        if (dtx.Rows[0]["ATIVO"].ToString() != "1")
+                        if (dtc.Rows[0]["ATIVO"].ToString() != "1")
                         {
                             // Atualiza o valor do painel em questão na coluna "ATIVO".
                             Odbc.Connect("ArgosAutomation", "DSN=SRVAZ31-ARGOS");
@@ -188,14 +204,20 @@ Trabalho que faz parte do grupo {JobGroup} está sendo executado as *{DateTime.N
                             Console.ForegroundColor = ConsoleColor.Gray;
                             //Odbc.dtm.Disconect();
 
-                            // Faz um alerta no grupo pertencente ao painel em questão.
-                            await Utilities.botClient.SendTextMessageAsync(
-                                chatId: ReportChatId,
+                            for (int j = 0; j < dtx.Rows.Count; j++)
+                            {
+                                // Faz um alerta no grupo pertencente ao painel em questão.
+                                await Utilities.botClient.SendTextMessageAsync(
+                                chatId: ChatIdGroup[j],
                                 text: @$"🤖: A atualização dos dados de *{GroupData}* foi restaurada, o painel de *{ReportName}* foi ativado novamente ✅.",
                                 parseMode: ParseMode.Markdown,
                                 cancellationToken: Utilities.cts);
+
+                            }
                         }
                     }
+
+                    ChatIdGroup.Clear();
                 }
             }
             catch (Exception ex)

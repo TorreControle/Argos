@@ -1,10 +1,9 @@
 ﻿SELECT 
 	a.ID as PAINEL_ID,
 	a.NOME as NOME_PAINEL,
-	d.CHAT_ID as CHAT_ID,
 	c.GRUPO_DADOS as GRUPO_DADOS,
 	c.SCRIPT as SCRIPT 
 FROM argos.t_painel_automation a
 	inner join argos.t_painel_automation_query_governanca b on b.PAINEL_ID = a.ID
 	inner join argos.t_query_governanca c on c.ID = b.QUERY_ID
-	inner join argos.t_grupo_telegram d on d.CHAT_ID = a.CHAT_ID;
+order by a.ID;

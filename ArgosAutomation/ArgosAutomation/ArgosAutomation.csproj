@@ -18,6 +18,7 @@
     <None Remove="DataModule\%40.txt" />
     <None Remove="DataModule\@@.txt" />
     <None Remove="DataModule\qryGetAlert.txt" />
+    <None Remove="DataModule\qryGetGroupQueriesGovernance.txt" />
     <None Remove="DataModule\qryGetGroupsReport.txt" />
     <None Remove="DataModule\qryGetJobs - Cópia.txt" />
     <None Remove="DataModule\qryGetJobs.txt" />
@@ -40,6 +41,7 @@
 
   <ItemGroup>
     <EmbeddedResource Include="DataModule\%40%40.txt" />
+    <EmbeddedResource Include="DataModule\qryGetGroupQueriesGovernance.txt" />
     <EmbeddedResource Include="DataModule\qryGetReport.txt" />
     <EmbeddedResource Include="DataModule\qryGetAlert.txt" />
     <EmbeddedResource Include="DataModule\qryGetGroupsReport.txt" />

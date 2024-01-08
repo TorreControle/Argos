@@ -190,7 +190,7 @@ namespace ArgosAutomation
                                     Console.ForegroundColor = ConsoleColor.Gray;
                                     await botClient.SendTextMessageAsync(
                                         chatId: ChatId,
-                                        text: $"🤖: {FirstName}, aguarde um momento eu estou executando a *{ReportJob.JobName}* no grupo de *{ReportJob.GroupName[1]}*. Aguarde uns instantes e solicite o painel de *{MessageText}* novamente.",
+                                        text: $"🤖: {FirstName}, aguarde um momento eu estou executando a *{ReportJob.JobName}* no grupo de *{ReportJob.GroupName[0]}*. Aguarde uns instantes e solicite o painel de *{MessageText}* novamente.",
                                         replyToMessageId: MessageId,
                                         replyMarkup: new ReplyKeyboardRemove(),
                                         disableNotification: true,
@@ -221,7 +221,7 @@ namespace ArgosAutomation
                         {
                             await botClient.SendTextMessageAsync(
                                     chatId: ChatId,
-                                    text: $"🤖: {FirstName}, só é permitida a solicitação do painel de *{MessageText}* no grupo *\"{Report.GroupName[1]}\"* aqui no telegram, talvez você não esteja entre os membros desse grupo mas caso faça, solicite-o lá.",
+                                    text: $"🤖: {FirstName}, só é permitida a solicitação do painel de *{MessageText}* no grupo *\"{Report.GroupName[0]}\"* aqui no telegram, talvez você não esteja entre os membros desse grupo mas caso faça, solicite-o lá.",
                                     replyToMessageId: MessageId,
                                     replyMarkup: new ReplyKeyboardRemove(),
                                     parseMode: ParseMode.Markdown,
@@ -241,6 +241,89 @@ namespace ArgosAutomation
                         //
                         switch (ChatId)
                         {
+                            #region Produção
+
+                            case -524861458: // CD
+
+                                for (int i = 0; i <= btnCD.Count - 1; i++)
+                                {
+                                    c.Add(new KeyboardButton("" + btnCD[i]));
+                                    r.Add(c.ToArray());
+                                    c = new List<KeyboardButton>();
+                                }
+                                if (c.Count >= 0) { r.Add(c.ToArray()); }
+                                replyButton.Keyboard = r.ToArray();
+
+                                await botClient.SendTextMessageAsync(
+                                    chatId: ChatId,
+                                    text: $"🤖: Claro! {FirstName}. Qual você quer ver?",
+                                    replyToMessageId: MessageId,
+                                    disableNotification: true,
+                                    replyMarkup: replyButton,
+                                    cancellationToken: cancellationToken);
+                                break;
+
+                            case -617355105: // Transporte
+                                for (int i = 0; i <= btnTransp.Count - 1; i++)
+                                {
+                                    c.Add(new KeyboardButton("" + btnTransp[i]));
+                                    r.Add(c.ToArray());
+                                    c = new List<KeyboardButton>();
+                                }
+                                if (c.Count >= 0) { r.Add(c.ToArray()); }
+                                replyButton.Keyboard = r.ToArray();
+
+                                await botClient.SendTextMessageAsync(
+                                    chatId: ChatId,
+                                    text: $"🤖: Claro! {FirstName}. Qual você quer ver?",
+                                    replyToMessageId: MessageId,
+                                    disableNotification: true,
+                                    replyMarkup: replyButton,
+                                    cancellationToken: cancellationToken);
+                                break;
+
+                            case -1001540853126: // Alfandegado
+                                for (int i = 0; i <= btnAlfan.Count - 1; i++)
+                                {
+                                    c.Add(new KeyboardButton("" + btnAlfan[i]));
+                                    r.Add(c.ToArray());
+                                    c = new List<KeyboardButton>();
+                                }
+                                if (c.Count >= 0) { r.Add(c.ToArray()); }
+                                replyButton.Keyboard = r.ToArray();
+
+                                await botClient.SendTextMessageAsync(
+                                    chatId: ChatId,
+                                    text: $"🤖: Claro! {FirstName}. Qual você quer ver?",
+                                    replyToMessageId: MessageId,
+                                    disableNotification: true,
+                                    replyMarkup: replyButton,
+                                    cancellationToken: cancellationToken);
+                                break;
+
+                            case -1001773173154: // Acompanhamento Operacional
+                                for (int i = 0; i <= btnAcomOp.Count - 1; i++)
+                                {
+                                    c.Add(new KeyboardButton("" + btnAcomOp[i]));
+                                    r.Add(c.ToArray());
+                                    c = new List<KeyboardButton>();
+                                }
+                                if (c.Count >= 0) { r.Add(c.ToArray()); }
+                                replyButton.Keyboard = r.ToArray();
+
+                                await botClient.SendTextMessageAsync(
+                                    chatId: ChatId,
+                                    text: $"🤖: Claro! {FirstName}. Qual você quer ver?",
+                                    replyToMessageId: MessageId,
+                                    disableNotification: true,
+                                    replyMarkup: replyButton,
+                                    cancellationToken: cancellationToken);
+                                break;
+
+                            #endregion
+
+                            #region Teste
+
                             case -4050698543: // CD
 
                                 for (int i = 0; i <= btnCD.Count - 1; i++)
@@ -298,6 +381,27 @@ namespace ArgosAutomation
                                     replyMarkup: replyButton,
                                     cancellationToken: cancellationToken);
                                 break;
+
+                            case -4060828765: // Acompanhamento Operacional
+                                for (int i = 0; i <= btnAcomOp.Count - 1; i++)
+                                {
+                                    c.Add(new KeyboardButton("" + btnAcomOp[i]));
+                                    r.Add(c.ToArray());
+                                    c = new List<KeyboardButton>();
+                                }
+                                if (c.Count >= 0) { r.Add(c.ToArray()); }
+                                replyButton.Keyboard = r.ToArray();
+
+                                await botClient.SendTextMessageAsync(
+                                    chatId: ChatId,
+                                    text: $"🤖: Claro! {FirstName}. Qual você quer ver?",
+                                    replyToMessageId: MessageId,
+                                    disableNotification: true,
+                                    replyMarkup: replyButton,
+                                    cancellationToken: cancellationToken);
+                                break;
+
+                            #endregion
 
                             default: // Padrão
                                 await botClient.SendTextMessageAsync(

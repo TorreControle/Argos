@@ -1,0 +1,8 @@
+﻿select
+	e.CHAT_ID as CHAT_ID_GROUP
+from argos.t_query_governanca a
+	join argos.t_painel_automation_query_governanca b on b.QUERY_ID = a.ID 
+	join argos.t_painel_automation c on c.ID = b.PAINEL_ID
+	join argos.t_painel_automation_grupo_telegram d on d.ID_PAINEL = c.ID 
+	join argos.t_grupo_telegram e on e.CHAT_ID = d.CHAT_ID_GRUPO 
+where c.ID = ':ID';
