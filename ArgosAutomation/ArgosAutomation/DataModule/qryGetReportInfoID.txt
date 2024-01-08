@@ -3,19 +3,20 @@
 	a.COMANDO as COMANDO,
 	a.NOME as NOME_PAINEL,
 	a.LINK as LINK,
-	b.CHAT_ID as CHAT_ID_GRUPO,
-	b.NOME as NOME_GRUPO,
-	b.OPERACAO as VERTICAL_NEGOCIO,
-	d.HORA as HORA_REPORT,
-	e.NOME as NOME_ROTINA,
-	e.EXPRESSAO_CRON as EXPRESSAO_CRON,
+	c.CHAT_ID as CHAT_ID_GRUPO,
+	c.NOME as NOME_GRUPO,
+	c.OPERACAO as VERTICAL_NEGOCIO,
+	e.HORA as HORA_REPORT,
+	f.NOME as NOME_ROTINA,
+	f.EXPRESSAO_CRON as EXPRESSAO_CRON,
 	a.TIPO_ENVIO as TIPO_ENVIO,
 	a.ATIVO as ATIVO,
 	a.GERANDO as GERANDO
 from argos.t_painel_automation a
-	join argos.t_grupo_telegram b on b.CHAT_ID = a.CHAT_ID 
-	join argos.t_divulgacao_automation c on c.PAINEL_ID = a.ID  
-	join argos.t_horario_divulgacao_automation d on d.ID = c.HORA_DIVULGACAO_ID 
-	join argos.t_trabalho_divulgacao_automation e on e.ID = d.ID_TRABALHO  
+	join argos.t_painel_automation_grupo_telegram b on b.ID_PAINEL = a.ID 
+	join argos.t_grupo_telegram c on c.CHAT_ID = b.CHAT_ID_GRUPO 
+	join argos.t_divulgacao_automation d on d.PAINEL_ID = a.ID  
+	join argos.t_horario_divulgacao_automation e on e.ID  = d.HORA_DIVULGACAO_ID 
+	join argos.t_trabalho_divulgacao_automation f on f.ID = e.ID_TRABALHO  
 where a.ID = ':ID' 
-and d.HORA = ':HORA_ENVIO';
+and e.HORA = ':HORA_ENVIO';

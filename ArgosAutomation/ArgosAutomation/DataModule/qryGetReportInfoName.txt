@@ -3,12 +3,12 @@
 	a.COMANDO as COMANDO,
 	a.NOME as NOME_PAINEL,
 	a.LINK as LINK,
-	b.CHAT_ID as CHAT_ID_GRUPO,
-	b.NOME as NOME_GRUPO,
-	b.OPERACAO as VERTICAL_NEGOCIO,
+	c.CHAT_ID as CHAT_ID_GRUPO,
+	c.NOME as NOME_GRUPO,
+	c.OPERACAO as VERTICAL_NEGOCIO,
 	a.TIPO_ENVIO as TIPO_ENVIO,
-	a.ATIVO as ATIVO,
-	a.GERANDO as GERANDO
+	a.ATIVO as ATIVO
 from argos.t_painel_automation a
-	join argos.t_grupo_telegram b on b.CHAT_ID = a.CHAT_ID  
+	join argos.t_painel_automation_grupo_telegram b on b.ID_PAINEL = a.ID
+	join argos.t_grupo_telegram c on c.CHAT_ID = b.CHAT_ID_GRUPO
 where a.COMANDO = ':COMANDO';

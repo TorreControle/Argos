@@ -1,9 +1,11 @@
-﻿SELECT 
-	a.ID as ID,
+﻿select 
+	distinct (a.ID) as ID,
 	a.COMANDO as COMANDO,
 	a.NOME as NOME,
-	b.OPERACAO,
+	c.OPERACAO as OPERACAO,
 	a.ATIVO as ATIVO,
 	a.GERANDO as GERANDO
-FROM argos.t_painel_automation a
-join argos.t_grupo_telegram b on b.CHAT_ID = a.CHAT_ID ;
+from argos.t_painel_automation a
+join argos.t_painel_automation_grupo_telegram b on b.ID_PAINEL = a.ID
+join argos.t_grupo_telegram c on c.CHAT_ID =b.CHAT_ID_GRUPO
+order by a.ID;

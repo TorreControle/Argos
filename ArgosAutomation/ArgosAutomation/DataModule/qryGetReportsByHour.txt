@@ -1,13 +1,10 @@
 ﻿select 
-	a.ID as ID,
-	a.NOME as NOME,
-	b.NOME as NOME_GRUPO_TELEGRAM,
-	b.CHAT_ID as CHAT_ID_GRUPO,
-	b.OPERACAO OPERACAO,
+	distinct(a.ID) as ID,
+	a.NOME as NOME,	
 	a.GERANDO as GERANDO
 from argos.t_painel_automation a
-	join argos.t_grupo_telegram b on a.CHAT_ID = b.CHAT_ID
-	join argos.t_divulgacao_automation c on c.PAINEL_ID = a.ID 
-	join argos.t_horario_divulgacao_automation d on d.ID = c.HORA_DIVULGACAO_ID
-	join argos.t_trabalho_divulgacao_automation e on e.ID = d.ID
-where d.HORA = ':HORA_DIVULGACAO';
+	join argos.t_painel_automation_grupo_telegram b on b.ID_PAINEL = a.ID 
+	join argos.t_divulgacao_automation d on d.PAINEL_ID = a.ID 
+	join argos.t_horario_divulgacao_automation e on e.ID = d.HORA_DIVULGACAO_ID
+	join argos.t_trabalho_divulgacao_automation f on f.ID = e.ID
+where e.HORA = ':HORA_DIVULGACAO';

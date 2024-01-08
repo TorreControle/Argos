@@ -1,0 +1,10 @@
+﻿select 
+	c.ID, 
+	c.NOME as NOME,
+	a.CHAT_ID as CHAT_ID_GRUPO,
+	a.NOME as NOME_GRUPO_TELEGRAM,
+	a.OPERACAO as OPERACAO
+from argos.t_grupo_telegram a
+	join argos.t_painel_automation_grupo_telegram b on b.CHAT_ID_GRUPO = a.CHAT_ID
+	join argos.t_painel_automation c on c.ID  = b.ID_PAINEL
+where c.ID = ':ID';

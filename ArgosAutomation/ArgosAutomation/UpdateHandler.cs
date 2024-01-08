@@ -125,21 +125,26 @@ namespace ArgosAutomation
                     List<string?> btnCD = new();
                     List<string?> btnAlfan = new();
                     List<string?> btnTransp = new();
+                    List<string?> btnAcomOp = new();
                     for (int i = 0; i <= dt.Rows.Count - 1; i++)
                     {
                         reportsCommands.Add(dt.Rows[i]["COMANDO"].ToString());
 
-                        if (dt.Rows[i]["OPERACAO"].ToString().Contains("CD"))
+                        if (dt.Rows[i]["OPERACAO"].ToString().Equals("CD"))
                         {
                             btnCD.Add(dt.Rows[i]["NOME"].ToString());
                         }
-                        else if (dt.Rows[i]["OPERACAO"].ToString().Contains("Alfandegado"))
+                        else if (dt.Rows[i]["OPERACAO"].ToString().Equals("Alfandegado"))
                         {
                             btnAlfan.Add(dt.Rows[i]["NOME"].ToString());
                         }
-                        else if (dt.Rows[i]["OPERACAO"].ToString().Contains("Transporte"))
+                        else if (dt.Rows[i]["OPERACAO"].ToString().Equals("Transporte"))
                         {
                             btnTransp.Add(dt.Rows[i]["NOME"].ToString());
+                        }
+                        else if (dt.Rows[i]["OPERACAO"].ToString().Equals("Acompanhamento Operacional"))
+                        {
+                            btnAcomOp.Add(dt.Rows[i]["NOME"].ToString());
                         }
                     }
 
@@ -150,7 +155,7 @@ namespace ArgosAutomation
                         Console.WriteLine(@$" [{DateTime.Now:dd/MM/yyyy - HH:mm:ss}] UpdateHandler: Solicitação do painel de {MessageText}.");
                         Report = new(message);
 
-                        if (Report.ChatIdGroup == ChatId || ChatId == 5495003005)
+                        if (Report.ChatIdGroup.Contains(ChatId) || ChatId == 5495003005)
                         {
                             // Verifica se o painel está ativado ou não.
                             if (Report.Enable == 1)
@@ -185,7 +190,7 @@ namespace ArgosAutomation
                                     Console.ForegroundColor = ConsoleColor.Gray;
                                     await botClient.SendTextMessageAsync(
                                         chatId: ChatId,
-                                        text: $"🤖: {FirstName}, aguarde um momento eu estou executando a *{ReportJob.JobName}* no grupo de *{ReportJob.GroupName}*. Aguarde uns instantes e solicite o painel de *{MessageText}* novamente.",
+                                        text: $"🤖: {FirstName}, aguarde um momento eu estou executando a *{ReportJob.JobName}* no grupo de *{ReportJob.GroupName[1]}*. Aguarde uns instantes e solicite o painel de *{MessageText}* novamente.",
                                         replyToMessageId: MessageId,
                                         replyMarkup: new ReplyKeyboardRemove(),
                                         disableNotification: true,
@@ -216,7 +221,7 @@ namespace ArgosAutomation
                         {
                             await botClient.SendTextMessageAsync(
                                     chatId: ChatId,
-                                    text: $"🤖: {FirstName}, só é permitida a solicitação do painel de *{MessageText}* no grupo *\"{Report.GroupName}\"* aqui no telegram, talvez você não esteja entre os membros desse grupo mas caso faça, solicite-o lá.",
+                                    text: $"🤖: {FirstName}, só é permitida a solicitação do painel de *{MessageText}* no grupo *\"{Report.GroupName[1]}\"* aqui no telegram, talvez você não esteja entre os membros desse grupo mas caso faça, solicite-o lá.",
                                     replyToMessageId: MessageId,
                                     replyMarkup: new ReplyKeyboardRemove(),
                                     parseMode: ParseMode.Markdown,

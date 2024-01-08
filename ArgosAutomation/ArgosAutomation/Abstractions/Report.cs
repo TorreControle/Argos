@@ -14,31 +14,31 @@ namespace ArgosAutomation.Abstractions
         /// <summary>
         /// ID do painel.
         /// </summary>
-        public int Id { get; set; }
+        public int? Id { get; set; }
         /// <summary>
         /// Comando atrelado ao painel.
         /// </summary>
-        private string Command { get; set; }
+        public string? Command { get; set; }
         /// <summary>
         /// Nome.
         /// </summary>
-        private string ReportName { get; set; }
+        private string? ReportName { get; set; }
         /// <summary>
         /// Link de acesso.
         /// </summary>
-        private string Link { get; set; }
+        private string? Link { get; set; }
         /// <summary>
         /// Chat ID respectivo ao grupo do painel.
         /// </summary>
-        public long ChatIdGroup { get; set; }
+        public List<long?> ChatIdGroup = new();
         /// <summary>
         /// Nome do grupo.
         /// </summary>
-        public string GroupName { get; set; }
+        public List<string?> GroupName = new();
         /// <summary>
         /// Vertical de negócio.
         /// </summary>
-        private string VerticalBusiness { get; set; }
+        private List<string?> VerticalBusiness = new();
         /// <summary>
         /// Hora que o painel é reportado.
         /// </summary>
@@ -54,19 +54,19 @@ namespace ArgosAutomation.Abstractions
         /// <summary>
         /// Tipo de envio do painel.
         /// </summary>
-        private string Type { get; set; }
+        private string? Type { get; set; }
         /// <summary>
         /// Armazena se o painel está ativo ou não.
         /// </summary>
-        public int Enable { get; set; }
+        public int? Enable { get; set; }
         /// <summary>
         /// Armazena se o painel está sendo gerado ou não.
         /// </summary>
-        public int BeingGenerated { get; set; }
+        public int? BeingGenerated { get; set; }
         /// <summary>
         /// Legenda do print.
         /// </summary>
-        private string Caption { get; set; }
+        private string? Caption { get; set; }
         /// <summary>
         /// Manipula o fluxo de arquivos no Windows.
         /// </summary>
@@ -98,24 +98,27 @@ namespace ArgosAutomation.Abstractions
             Odbc.dtm.ParamByName(qry, ":ID", id.ToString());
             Odbc.dtm.ParamByName(qry, ":HORA_ENVIO", reportTime);
             dt = Odbc.dtm.ExecuteQuery(qry);
-            Console.WriteLine(@$" [{DateTime.Now:dd/MM/yyyy - HH:mm:ss}] Report: Informações do painel {ReportName} obtidas do banco de dados! Criando instância.");
+            Console.WriteLine(@$" [{DateTime.Now:dd/MM/yyyy - HH:mm:ss}] Report: Informações do painel {(string)dt.Rows[1]["NOME_PAINEL"]} obtidas do banco de dados! Construindo report.");
             //Odbc.dtm.Disconect();
 
             // Atribui os valores as propriedades.
-            Id = int.Parse((string)dt.Rows[0]["ID"]);
-            Command = (string)dt.Rows[0]["COMANDO"];
-            ReportName = (string)dt.Rows[0]["NOME_PAINEL"];
-            Link = (string)dt.Rows[0]["LINK"];
-            ChatIdGroup = long.Parse((string)dt.Rows[0]["CHAT_ID_GRUPO"]);
-            GroupName = (string)dt.Rows[0]["NOME_GRUPO"];
-            VerticalBusiness = (string)dt.Rows[0]["VERTICAL_NEGOCIO"];
-            TimeReport = (string)dt.Rows[0]["HORA_REPORT"];
-            RoutineName = (string)dt.Rows[0]["NOME_ROTINA"];
-            ExpressionCron = (string)dt.Rows[0]["EXPRESSAO_CRON"];
-            Type = (string)dt.Rows[0]["TIPO_ENVIO"];
-            Enable = int.Parse((string)dt.Rows[0]["ATIVO"]);
-            Caption = @$"Segue painel de *{ReportName}* atualizado 📊.";
+            for (int i = 0; i < dt.Rows.Count; i++)
+            {
+                Id = int.Parse((string)dt.Rows[i]["ID"]);
+                Command = (string)dt.Rows[i]["COMANDO"];
+                ReportName = (string)dt.Rows[i]["NOME_PAINEL"];
+                Link = (string)dt.Rows[i]["LINK"];
+                ChatIdGroup.Add(long.Parse((string)dt.Rows[i]["CHAT_ID_GRUPO"]));
+                GroupName.Add((string)dt.Rows[i]["NOME_GRUPO"]);
+                VerticalBusiness.Add((string)dt.Rows[i]["VERTICAL_NEGOCIO"]);
+                TimeReport = (string)dt.Rows[i]["HORA_REPORT"];
+                RoutineName = (string)dt.Rows[i]["NOME_ROTINA"];
+                ExpressionCron = (string)dt.Rows[i]["EXPRESSAO_CRON"];
+                Type = (string)dt.Rows[i]["TIPO_ENVIO"];
+                Enable = int.Parse((string)dt.Rows[i]["ATIVO"]);
+            }
 
+            Caption = @$"Segue painel de *{ReportName}* atualizado 📊.";
 
         }
         /// <summary>
@@ -131,19 +134,23 @@ namespace ArgosAutomation.Abstractions
             Odbc.dtm.CleanParamters(qry);
             Odbc.dtm.ParamByName(qry, ":COMANDO", command);
             dt = Odbc.dtm.ExecuteQuery(qry);
-            Console.WriteLine(@$" [{DateTime.Now:dd/MM/yyyy - HH:mm:ss}] Report: Informações do painel {ReportName} obtidas do banco de dados! Construindo report.");
+            Console.WriteLine(@$" [{DateTime.Now:dd/MM/yyyy - HH:mm:ss}] Report: Informações do painel {(string)dt.Rows[1]["NOME_PAINEL"]} obtidas do banco de dados! Construindo report.");
             //Odbc.dtm.Disconect();
 
             // Atribui os valores as propriedades.
-            Id = int.Parse((string)dt.Rows[0]["ID"]);
-            Command = (string)dt.Rows[0]["COMANDO"];
-            ReportName = (string)dt.Rows[0]["NOME_PAINEL"];
-            Link = (string)dt.Rows[0]["LINK"];
-            ChatIdGroup = long.Parse((string)dt.Rows[0]["CHAT_ID_GRUPO"]);
-            GroupName = (string)dt.Rows[0]["NOME_GRUPO"];
-            VerticalBusiness = (string)dt.Rows[0]["VERTICAL_NEGOCIO"];
-            Type = (string)dt.Rows[0]["TIPO_ENVIO"];
-            Enable = int.Parse((string)dt.Rows[0]["ATIVO"]);
+            for (int i = 0; i < dt.Rows.Count; i++)
+            {
+                Id = int.Parse((string)dt.Rows[i]["ID"]);
+                Command = (string)dt.Rows[i]["COMANDO"];
+                ReportName = (string)dt.Rows[i]["NOME_PAINEL"];
+                Link = ((string)dt.Rows[i]["LINK"]);
+                ChatIdGroup.Add(long.Parse((string)dt.Rows[i]["CHAT_ID_GRUPO"]));
+                GroupName.Add((string)dt.Rows[i]["NOME_GRUPO"]);
+                VerticalBusiness.Add((string)dt.Rows[i]["VERTICAL_NEGOCIO"]);
+                Type = ((string)dt.Rows[i]["TIPO_ENVIO"]);
+                Enable = int.Parse((string)dt.Rows[i]["ATIVO"]);
+            }
+
             Caption = Tools.ChatGPT(@$"Criar uma legenda curta para a foto de um painel de {ReportName} de análise logística de {VerticalBusiness} essa legenda é para o Telegram e será vista por lideres, supervisores, coordenadores, gerentes e diretores de uma empresa chamada Multilog SA, inicie a frase assim: Segue report de {ReportName}.").Result;
 
         }
