@@ -10,7 +10,6 @@ Desenvolvedores: Willian Renato Lima da Silva, Email: willian.silva@multilog.com
 using System.Net;
 using System.Speech.Synthesis;
 using Telegram.Bot;
-using Telegram.Bot.Types.Enums;
 
 namespace ArgosOnDemand.Skill
 {
@@ -47,8 +46,7 @@ namespace ArgosOnDemand.Skill
 👤 Usuário: {Environment.UserName}
 💻 Nome da máquina: {Dns.GetHostName()}
 🌐 IP: {Dns.GetHostByName(Dns.GetHostName()).AddressList[1]} - {Environment.UserDomainName}
-🕒 Data e hora: {DateTime.Now}".Replace("*", "\\*").Replace("_", "\\_").Replace("`", "\\`").Replace("[", "\\["),
-                parseMode: ParseMode.Markdown);
+🕒 Data e hora: {DateTime.Now}".Replace("*", "\\*").Replace("_", "\\_").Replace("`", "\\`").Replace("[", "\\["));
 
             }
 
@@ -77,8 +75,7 @@ namespace ArgosOnDemand.Skill
 *Usuário ID:* {Updates.userId}
 *Nome do usuário:* {Updates.firstName} {Updates.lastName}
 *Usuário:* {Tools.TextProcessing(Updates.userName, alphas: true, numerics: true)}
-*Atualização ID:* {Updates.updateId}".Replace("*", "\\*").Replace("_", "\\_").Replace("`", "\\`").Replace("[", "\\["),
-                parseMode: ParseMode.Markdown);
+*Atualização ID:* {Updates.updateId}".Replace("*", "\\*").Replace("_", "\\_").Replace("`", "\\`").Replace("[", "\\["));
 
             };
         }
@@ -100,8 +97,7 @@ namespace ArgosOnDemand.Skill
 
 *Fonte:* {exception.Source}
 
-".Replace("*", "\\*").Replace("_", "\\_").Replace("`", "\\`").Replace("[", "\\["),
-                parseMode: ParseMode.Markdown);
+".Replace("*", "\\*").Replace("_", "\\_").Replace("`", "\\`").Replace("[", "\\["));
 
             }
 

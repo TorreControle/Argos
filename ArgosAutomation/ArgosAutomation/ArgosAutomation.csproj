@@ -6,6 +6,7 @@
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
     <ApplicationIcon>Logo-Argos-BR2.ico</ApplicationIcon>
+    <UserSecretsId>93db236e-79f4-426b-ae33-23db9617f42a</UserSecretsId>
   </PropertyGroup>
 
   <ItemGroup>
@@ -62,12 +63,16 @@
   <ItemGroup>
     <PackageReference Include="Betalgo.OpenAI" Version="7.4.3" />
     <PackageReference Include="CliWrap" Version="3.6.4" />
+    <PackageReference Include="Microsoft.Extensions.Configuration.UserSecrets" Version="8.0.0" />
     <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
+    <PackageReference Include="Newtonsoft.Json.Bson" Version="1.0.2" />
+    <PackageReference Include="Newtonsoft.Json.Schema" Version="3.0.15" />
     <PackageReference Include="OpenAI" Version="1.10.0" />
     <PackageReference Include="Quartz" Version="3.8.0" />
     <PackageReference Include="System.Collections" Version="4.3.0" />
     <PackageReference Include="System.Data.Odbc" Version="8.0.0" />
     <PackageReference Include="System.Speech" Version="8.0.0" />
+    <PackageReference Include="System.Text.Json" Version="8.0.1" />
     <PackageReference Include="Telegram.Bot" Version="19.0.0" />
   </ItemGroup>
 

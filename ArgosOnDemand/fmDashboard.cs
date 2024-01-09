@@ -9,7 +9,6 @@ Desenvolvedores: Willian Renato Lima da Silva, Email: willian.silva@multilog.com
 
 using ArgosOnDemand.Skill;
 using Telegram.Bot;
-using Monitoring = ArgosOnDemand.Skill.Monitoring;
 
 namespace ArgosOnDemand
 {

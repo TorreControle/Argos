@@ -79,7 +79,7 @@
     <PackageReference Include="System.Data.Odbc" Version="8.0.0" />
     <PackageReference Include="System.Data.OleDb" Version="8.0.0" />
     <PackageReference Include="System.Speech" Version="8.0.0" />
-    <PackageReference Include="Telegram.Bot" Version="18.0.0" />
+    <PackageReference Include="Telegram.Bot" Version="19.0.0" />
     <PackageReference Include="Telegram.Bots.Extensions.Polling" Version="5.9.0" />
     <PackageReference Include="ZXing.Net.Mobile" Version="2.4.1" />
   </ItemGroup>

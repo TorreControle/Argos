@@ -8,7 +8,7 @@ Desenvolvedores: Willian Renato Lima da Silva, Email: willian.silva@multilog.com
 */
 
 using Telegram.Bot;
-using Telegram.Bot.Types.Enums;
+using Telegram.Bot.Types;
 using Telegram.Bot.Types.ReplyMarkups;
 
 namespace ArgosOnDemand.Skill
@@ -26,7 +26,7 @@ namespace ArgosOnDemand.Skill
                 disableNotification: true,
                 protectContent: protectContent,
                 replyToMessageId: replyToMessageId,
-                parseMode: ParseMode.Markdown);
+                parseMode: Telegram.Bot.Types.Enums.ParseMode.Markdown);
         }
 
 
@@ -34,76 +34,18 @@ namespace ArgosOnDemand.Skill
 
         async public static Task Photo(long chatId, string directory, IReplyMarkup? replyMarkup = null, string? caption = null, int? replyToMessageId = null)
         {
-            Stream photo = File.OpenRead(directory);
+            var photo = new FileStream($@"{directory}", FileMode.Open, FileAccess.Read);
+            var PrintPath = InputFile.FromStream(photo);
             await fmDashboard.botClient.SendPhotoAsync(
                   chatId: chatId,
-                  photo: photo,
+                  photo: PrintPath,
                   caption: caption.Replace("*", "\\*").Replace("_", "\\_").Replace("`", "\\`").Replace("[", "\\["),
                   replyMarkup: replyMarkup,
                   disableNotification: true,
-                  replyToMessageId: replyToMessageId,
-                  parseMode: ParseMode.Markdown);
+                  replyToMessageId: replyToMessageId);
             photo.Dispose();
             photo.Close();
         }
 
-
-        // Método de envio de vídeo
-
-        async public static Task Video(long chatId, string directory, IReplyMarkup? replyMarkup = null, string? thumb = null, string? caption = null, int? replyToMessageId = null, bool? supportsStreaming = null)
-        {
-            Stream video = File.OpenRead(directory);
-            await fmDashboard.botClient.SendVideoAsync(
-                    chatId: chatId,
-                    video: video,
-                    thumb: thumb,
-                    caption: caption.Replace("*", "\\*").Replace("_", "\\_").Replace("`", "\\`").Replace("[", "\\["),
-                    replyMarkup: replyMarkup,
-                    disableNotification: true,
-                    replyToMessageId: replyToMessageId);
-        }
-
-
-        // Método de envio de documento
-
-        async public static Task Document(long chatId, string directory, IReplyMarkup? replyMarkup = null, string? caption = null, int? replyToMessageId = null)
-        {
-            Stream document = File.OpenRead(directory);
-            await fmDashboard.botClient.SendDocumentAsync(
-                    chatId: chatId,
-                    document: document,
-                    caption: caption.Replace("*", "\\*").Replace("_", "\\_").Replace("`", "\\`").Replace("[", "\\["),
-                    replyMarkup: replyMarkup,
-                    disableNotification: true,
-                    replyToMessageId: replyToMessageId);
-        }
-
-
-        // Método de envio de áudio
-
-        async public static Task Audio(long chatId, string directory, IReplyMarkup? replyMarkup = null, int? replyToMessageId = null)
-        {
-            Stream audio = File.OpenRead(directory);
-            await fmDashboard.botClient.SendAudioAsync(
-                     chatId: chatId,
-                     audio: audio,
-                     replyMarkup: replyMarkup,
-                     disableNotification: true,
-                     replyToMessageId: replyToMessageId);
-        }
-
-
-        // Método de envio de animações
-
-        async public static Task Animation(long chatId, string link, IReplyMarkup? replyMarkup = null, string? caption = null, int? replyToMessageId = null)
-        {
-            await fmDashboard.botClient.SendAnimationAsync(
-                    chatId: chatId,
-                    animation: link,
-                    caption: caption.Replace("*", "\\*").Replace("_", "\\_").Replace("`", "\\`").Replace("[", "\\["),
-                    replyMarkup: replyMarkup,
-                    disableNotification: true,
-                    replyToMessageId: replyToMessageId);
-        }
     }
 }
