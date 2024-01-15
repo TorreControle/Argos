@@ -53,7 +53,6 @@ namespace ArgosAutomation.Jobs
         /// Script da query de governança.
         /// </summary>
         public string? Script { get; set; }
-
         /// <summary>
         /// 
         /// </summary>
@@ -82,7 +81,7 @@ namespace ArgosAutomation.Jobs
                 chatId: 5495003005,
                 text: $@"*{JobName}* em execução 👮🏾‍♂️.
 
-Trabalho que faz parte do grupo {JobGroup} está sendo executado as *{DateTime.Now}*.",
+🤖: Trabalho que faz parte do grupo {JobGroup} está sendo executado as *{DateTime.Now}*.",
                 parseMode: ParseMode.Markdown,
                 cancellationToken: Utilities.cts);
 
@@ -97,7 +96,12 @@ Trabalho que faz parte do grupo {JobGroup} está sendo executado as *{DateTime.N
                 // Percorre por todas a queries.
                 for (int i = 0; i < dt.Rows.Count; i++)
                 {
-                    // Atribui os valores pertencentes a queries.
+
+
+
+
+
+                    /* Atribui os valores pertencentes a queries.
                     ReportId = int.Parse((string)dt.Rows[i]["PAINEL_ID"]);
                     ReportName = (string)dt.Rows[i]["NOME_PAINEL"];
                     GroupData = (string)dt.Rows[i]["GRUPO_DADOS"];
@@ -144,9 +148,17 @@ Trabalho que faz parte do grupo {JobGroup} está sendo executado as *{DateTime.N
                         DataTable dtc = Odbc.dtm.ExecuteQuery(qry);
                         //Odbc.dtm.Disconect();
 
+
                         // Verifica se ele já está desativado ou não.
                         if (dtc.Rows[0]["ATIVO"].ToString() != "0")
                         {
+                            // Faz um alerta no grupo da governça sobre ao painel em questão com dados desatualizados.
+                            await Utilities.botClient.SendTextMessageAsync(
+                                chatId: -975484125,
+                                text: @$"🤖: Os dados de *{GroupData}* estão desatualizados, o painel de *{ReportName}* foi desativado ⚠️.",
+                                parseMode: ParseMode.Markdown,
+                                cancellationToken: Utilities.cts);
+
                             // Atualiza o valor do painel em questão na coluna "ATIVO".
                             Odbc.Connect("ArgosAutomation", "DSN=SRVAZ31-ARGOS");
                             qry = "qryUpdateEnable.txt";
@@ -166,13 +178,10 @@ Trabalho que faz parte do grupo {JobGroup} está sendo executado as *{DateTime.N
                                 // Faz um alerta no grupo pertencente ao painel em questão.
                                 await Utilities.botClient.SendTextMessageAsync(
                                     chatId: ChatIdGroup[j],
-                                    text: @$"🤖: Os dados de *{GroupData}* estão desatualizados, o painel de *{ReportName}* foi desativado ⚠️.",
+                                    text: @$"🤖: Pessoal, alguns *{GroupData}* foram verificados e encontrados desatualizados, o painel de *{ReportName}* foi desativado ⚠️.",
                                     parseMode: ParseMode.Markdown,
                                     cancellationToken: Utilities.cts);
-
                             }
-
-
                         }
                     }
                     else if (outdated == 0)
@@ -215,7 +224,7 @@ Trabalho que faz parte do grupo {JobGroup} está sendo executado as *{DateTime.N
 
                             }
                         }
-                    }
+                    }*/
 
                     ChatIdGroup.Clear();
                 }

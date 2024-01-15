@@ -1,1 +1,1 @@
-﻿SELECT distinct COALESCE((SELECT ID_CHAT FROM argos.t_permissoes_demand WHERE ID_CHAT = ':CHATID'), 'Sem permissão') as ID from argos.t_permissoes_demand
+﻿SELECT distinct COALESCE((SELECT CHAT_ID FROM argos.t_permissoes_demand WHERE CHAT_ID = ':CHATID'), 'Sem permissão') as ID from argos.t_permissoes_demand

@@ -103,6 +103,9 @@ namespace ArgosAutomation
             DataTable dt = Odbc.dtm.ExecuteQuery(qry);
             //Odbc.dtm.Disconect();
 
+            //var poiu = ChatId;
+            //var poiw = long.Parse((string)dt.Rows[0]["ID"]);
+
             // Verificação de usuário.
             if (ChatId == long.Parse((string)dt.Rows[0]["ID"]))
             {
@@ -111,7 +114,7 @@ namespace ArgosAutomation
                 Console.WriteLine(@$"    Chat ID correspondente permitido: {long.Parse((string)dt.Rows[0]["ID"])}.");
                 if (update.Message.Type == MessageType.Text)
                 {
-                    // Atribui o valor do texto enviado ao bot dentro da propriedade "MessageText" e faz um tratamento de caracteres para uma maior facilidade de acinar os gatilhos.
+                    // Atribui o valor do texto enviado ao bot dentro da propriedade "MessageText" e faz um tratamento de caracteres para uma maior facilidade de acionar os gatilhos.
                     MessageText = update.Message.Text;
                     Console.WriteLine(@$"    Texto: {MessageText}");
                     string message = Tools.RemoveSpecialCharacters(Tools.RemoveDiacritics(MessageText).Replace(" ", "").ToLower(), true);
@@ -406,20 +409,48 @@ namespace ArgosAutomation
                             default: // Padrão
                                 await botClient.SendTextMessageAsync(
                                     chatId: ChatId,
-                                    text: $"🤖: Esse comando não é permitido nessa conversa!",
+                                    text: $"🤖: Esse comando não é permitido nesse chat!",
                                     replyToMessageId: MessageId,
                                     disableNotification: true,
                                     cancellationToken: cancellationToken);
                                 break;
                         }
                     }
+
+                    // Grava todas as mensagens que o Argos recebe no banco de dados.
+                    Odbc.Connect("ArgosAutomation", "DSN=SRVAZ31-ARGOS");
+                    qry = "qryInsertUpdates.txt";
+                    Odbc.dtm.CleanParamters(qry);
+                    Odbc.dtm.ParamByName(qry, ":ID_TABELA", Guid.NewGuid().ToString());
+                    Odbc.dtm.ParamByName(qry, ":ATUALIZACAO_ID", UpdateId.ToString());
+                    Odbc.dtm.ParamByName(qry, ":ID_USUARIO", UserId.ToString());
+                    Odbc.dtm.ParamByName(qry, ":CHAT_ID", ChatId.ToString());
+                    Odbc.dtm.ParamByName(qry, ":TITULO_CHAT", ChatTitle);
+                    Odbc.dtm.ParamByName(qry, ":TEXTO", MessageText);
+                    Odbc.dtm.ParamByName(qry, ":NOME", $"{FirstName} {LastName}");
+                    Odbc.dtm.ParamByName(qry, ":USUARIO", UserName);
+                    Odbc.dtm.ExecuteNonQuery(qry);
+                    Console.WriteLine(@$" [{DateTime.Now:dd/MM/yyyy - HH:mm:ss}] UpdateHandler: Insert na tabela argos.t_atualizacao_recebida_telegram da atualizaçao nº {MessageId} feito as {DateTime.Now:HH:mm:ss} foi realizado com exito.");
+                    Console.WriteLine(" ");
+
                 }
+                else
+                {
+                    // 
+                    Console.BackgroundColor = ConsoleColor.DarkYellow;
+                    Console.ForegroundColor = ConsoleColor.DarkRed;
+                    Console.WriteLine(@$" [{DateTime.Now:dd/MM/yyyy - HH:mm:ss}] UpdateHandler: Atualização do tipo {update.Message.Type} não foi tratada.");
+                    Console.BackgroundColor = ConsoleColor.Black;
+                    Console.ForegroundColor = ConsoleColor.Gray;
+                    return;
+                }
+
             }
             else
             {
                 // Mensagem de bloqueio para usuário não autorizado a falar como bot.
-                Console.BackgroundColor = ConsoleColor.DarkRed;
-                Console.ForegroundColor = ConsoleColor.Red;
+                Console.BackgroundColor = ConsoleColor.DarkYellow;
+                Console.ForegroundColor = ConsoleColor.DarkRed;
                 Console.WriteLine(@$" [{DateTime.Now:dd/MM/yyyy - HH:mm:ss}] UpdateHandler: Individuo sem autorização.");
                 Console.BackgroundColor = ConsoleColor.Black;
                 Console.ForegroundColor = ConsoleColor.Gray;
@@ -431,34 +462,18 @@ namespace ArgosAutomation
                     cancellationToken: cancellationToken);
                 await botClient.SendTextMessageAsync(
                     chatId: 5495003005,
-                    text: @$"UpdateHandler: Individuo sem autorização 🔒 - {DateTime.Now}
+                    text: @$"Individuo sem autorização 🔒 - {DateTime.Now}
 
 Uma pessoa não autorizada está tentando falar comigo.
 
-Nome: {FirstName} {LastName}
-Chat ID: {ChatId}
-Data e hora: {MessageDate}",
+*Nome:* {FirstName} {LastName}
+*Chat ID:* {ChatId}
+*Data e hora:*: {MessageDate}",
                     replyToMessageId: MessageId,
                     parseMode: ParseMode.Markdown,
                     cancellationToken: cancellationToken);
 
             }
-
-            // Grava todas as mensagens que o Argos recebe no banco de dados.
-            Odbc.Connect("ArgosAutomation", "DSN=SRVAZ31-ARGOS");
-            qry = "qryInsertUpdates.txt";
-            Odbc.dtm.CleanParamters(qry);
-            Odbc.dtm.ParamByName(qry, ":ID_TABELA", Guid.NewGuid().ToString());
-            Odbc.dtm.ParamByName(qry, ":ATUALIZACAO_ID", UpdateId.ToString());
-            Odbc.dtm.ParamByName(qry, ":ID_USUARIO", UserId.ToString());
-            Odbc.dtm.ParamByName(qry, ":CHAT_ID", ChatId.ToString());
-            Odbc.dtm.ParamByName(qry, ":TITULO_CHAT", ChatTitle);
-            Odbc.dtm.ParamByName(qry, ":TEXTO", MessageText);
-            Odbc.dtm.ParamByName(qry, ":NOME", $"{FirstName} {LastName}");
-            Odbc.dtm.ParamByName(qry, ":USUARIO", UserName);
-            Odbc.dtm.ExecuteNonQuery(qry);
-            Console.WriteLine(@$" [{DateTime.Now:dd/MM/yyyy - HH:mm:ss}] UpdateHandler: Insert na tabela argos.t_atualizacao_recebida_telegram da atualizaçao nº {MessageId} feito as {DateTime.Now:HH:mm:ss} foi realizado com exito.");
-            Console.WriteLine(" ");
         }
     }
 }
