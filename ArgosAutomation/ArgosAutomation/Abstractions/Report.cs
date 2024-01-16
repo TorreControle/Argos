@@ -98,7 +98,7 @@ namespace ArgosAutomation.Abstractions
             Odbc.dtm.ParamByName(qry, ":ID", id.ToString());
             Odbc.dtm.ParamByName(qry, ":HORA_ENVIO", reportTime);
             dt = Odbc.dtm.ExecuteQuery(qry);
-            Console.WriteLine(@$" [{DateTime.Now:dd/MM/yyyy - HH:mm:ss}] Report: Informações do painel {(string)dt.Rows[1]["NOME_PAINEL"]} obtidas do banco de dados! Construindo report.");
+            Console.WriteLine(@$" [{DateTime.Now:dd/MM/yyyy - HH:mm:ss}] Report: Informações do painel {(string)dt.Rows[0]["NOME_PAINEL"]} obtidas do banco de dados! Construindo report.");
             //Odbc.dtm.Disconect();
 
             // Atribui os valores as propriedades.
@@ -134,7 +134,7 @@ namespace ArgosAutomation.Abstractions
             Odbc.dtm.CleanParamters(qry);
             Odbc.dtm.ParamByName(qry, ":COMANDO", command);
             dt = Odbc.dtm.ExecuteQuery(qry);
-            Console.WriteLine(@$" [{DateTime.Now:dd/MM/yyyy - HH:mm:ss}] Report: Informações do painel {(string)dt.Rows[1]["NOME_PAINEL"]} obtidas do banco de dados! Construindo report.");
+            Console.WriteLine(@$" [{DateTime.Now:dd/MM/yyyy - HH:mm:ss}] Report: Informações do painel {(string)dt.Rows[0]["NOME_PAINEL"]} obtidas do banco de dados! Construindo report.");
             //Odbc.dtm.Disconect();
 
             // Atribui os valores as propriedades.

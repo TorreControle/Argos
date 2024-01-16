@@ -1,9 +1,1 @@
-﻿SELECT 
-	a.ID as PAINEL_ID,
-	a.NOME as NOME_PAINEL,
-	c.GRUPO_DADOS as GRUPO_DADOS,
-	c.SCRIPT as SCRIPT 
-FROM argos.t_painel_automation a
-	inner join argos.t_painel_automation_query_governanca b on b.PAINEL_ID = a.ID
-	inner join argos.t_query_governanca c on c.ID = b.QUERY_ID
-order by a.ID;
+﻿SELECT * FROM argos.t_query_governanca;
