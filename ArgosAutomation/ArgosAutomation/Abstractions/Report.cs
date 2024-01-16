@@ -98,7 +98,6 @@ namespace ArgosAutomation.Abstractions
             Odbc.dtm.ParamByName(qry, ":ID", id.ToString());
             Odbc.dtm.ParamByName(qry, ":HORA_ENVIO", reportTime);
             dt = Odbc.dtm.ExecuteQuery(qry);
-            Console.WriteLine(@$" [{DateTime.Now:dd/MM/yyyy - HH:mm:ss}] Report: Informações do painel {(string)dt.Rows[0]["NOME_PAINEL"]} obtidas do banco de dados! Construindo report.");
             //Odbc.dtm.Disconect();
 
             // Atribui os valores as propriedades.
@@ -118,7 +117,8 @@ namespace ArgosAutomation.Abstractions
                 Enable = int.Parse((string)dt.Rows[i]["ATIVO"]);
             }
 
-            Caption = @$"Segue painel de *{ReportName}* atualizado 📊.";
+            Caption = @$"🤖: Segue painel de *{ReportName}* atualizado 📊.";
+            Console.WriteLine(@$" [{DateTime.Now:dd/MM/yyyy - HH:mm:ss}] Report: Informações do painel {ReportName} obtidas do banco de dados! Construindo report.");
 
         }
         /// <summary>
@@ -134,7 +134,6 @@ namespace ArgosAutomation.Abstractions
             Odbc.dtm.CleanParamters(qry);
             Odbc.dtm.ParamByName(qry, ":COMANDO", command);
             dt = Odbc.dtm.ExecuteQuery(qry);
-            Console.WriteLine(@$" [{DateTime.Now:dd/MM/yyyy - HH:mm:ss}] Report: Informações do painel {(string)dt.Rows[0]["NOME_PAINEL"]} obtidas do banco de dados! Construindo report.");
             //Odbc.dtm.Disconect();
 
             // Atribui os valores as propriedades.
@@ -151,7 +150,8 @@ namespace ArgosAutomation.Abstractions
                 Enable = int.Parse((string)dt.Rows[i]["ATIVO"]);
             }
 
-            Caption = Tools.ChatGPT(@$"Criar uma legenda curta para a foto de um painel de {ReportName} de análise logística de {VerticalBusiness} essa legenda é para o Telegram e será vista por lideres, supervisores, coordenadores, gerentes e diretores de uma empresa chamada Multilog SA, inicie a frase assim: Segue report de {ReportName}.").Result;
+            Caption = $"🤖: {Tools.ChatGPT(@$"Criar uma legenda curta para a foto de um painel de {ReportName} de análise logística de {VerticalBusiness} essa legenda é para o Telegram e será vista por lideres, supervisores, coordenadores, gerentes e diretores de uma empresa chamada Multilog SA, inicie a frase assim: Segue report de {ReportName}.").Result}";
+            Console.WriteLine(@$" [{DateTime.Now:dd/MM/yyyy - HH:mm:ss}] Report: Informações do painel {ReportName} obtidas do banco de dados! Construindo report.");
 
         }
         /// <summary>

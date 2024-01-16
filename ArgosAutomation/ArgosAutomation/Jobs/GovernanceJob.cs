@@ -123,7 +123,7 @@ namespace ArgosAutomation.Jobs
                     Odbc.dtm.ParamByName(qry, ":SCRIPT", Script);
                     DataTable dts = Odbc.dtm.ExecuteQuery(qry);
                     int outdated = Tools.HasTrueValueInColumn(dts, "ALERTA");
-                    outdated = 0;
+                    //outdated = 0;
 
                     // Obtém informações dos grupos na qual a query em questão está relacionada.
                     Odbc.Connect("ArgosAutomation", "DSN=SRVAZ31-ARGOS");
@@ -149,7 +149,7 @@ namespace ArgosAutomation.Jobs
                         Console.BackgroundColor = ConsoleColor.Black;
                         Console.ForegroundColor = ConsoleColor.Gray;
                         await Utilities.botClient.SendTextMessageAsync(
-                            chatId: 5495003005 /*- 975484125*/,
+                            chatId: /*5495003005*/ -975484125,
                             text: @$"@labtorre e @TorreSul
 
 🤖: Pessoal, os dados de *{GroupData}* estão desatualizados ⚠️.",
