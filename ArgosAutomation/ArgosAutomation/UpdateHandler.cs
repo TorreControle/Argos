@@ -158,7 +158,7 @@ namespace ArgosAutomation
                         Console.WriteLine(@$" [{DateTime.Now:dd/MM/yyyy - HH:mm:ss}] UpdateHandler: Solicitação do painel de {MessageText}.");
                         Report = new(message);
 
-                        if (Report.ChatIdGroup.Contains(ChatId) || ChatId == 5495003005)
+                        if (Report.ChatIdGroup.Contains(ChatId) || ChatId == 5495003005 || ChatId == -975484125 || ChatId == -1001530604829)
                         {
                             // Verifica se o painel está ativado ou não.
                             if (Report.Enable == 1)
@@ -224,9 +224,10 @@ namespace ArgosAutomation
                         {
                             await botClient.SendTextMessageAsync(
                                     chatId: ChatId,
-                                    text: $"🤖: {FirstName}, só é permitida a solicitação do painel de *{MessageText}* no grupo *\"{Report.GroupName[0]}\"* aqui no telegram, talvez você não esteja entre os membros desse grupo mas caso faça, solicite-o lá.",
+                                    text: $"🤖: {FirstName}, só é permitida a solicitação do painel de *{MessageText}* no grupo *\"{Report.GroupName[0]}\"* aqui no telegram, talvez você não faça parte desse grupo mas caso faça, solicite-o lá.",
                                     replyToMessageId: MessageId,
                                     replyMarkup: new ReplyKeyboardRemove(),
+                                    disableNotification: true,
                                     parseMode: ParseMode.Markdown,
                                     cancellationToken: cancellationToken);
                         }
@@ -417,6 +418,12 @@ namespace ArgosAutomation
                         }
                     }
 
+                    // Comando para a atualização geral de todos os BI's de um grupo
+                    if (message.Equals("argosnosatualize"))
+                    {
+
+                    }
+
                     // Grava todas as mensagens que o Argos recebe no banco de dados.
                     Odbc.Connect("ArgosAutomation", "DSN=SRVAZ31-ARGOS");
                     qry = "qryInsertUpdates.txt";
@@ -460,6 +467,8 @@ namespace ArgosAutomation
                     replyToMessageId: MessageId,
                     parseMode: ParseMode.Markdown,
                     cancellationToken: cancellationToken);
+
+                //
                 await botClient.SendTextMessageAsync(
                     chatId: 5495003005,
                     text: @$"Individuo sem autorização 🔒 - {DateTime.Now}

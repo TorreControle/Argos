@@ -15,7 +15,7 @@
 from argos.t_painel_automation a
 	join argos.t_painel_automation_grupo_telegram b on b.ID_PAINEL = a.ID 
 	join argos.t_grupo_telegram c on c.CHAT_ID = b.CHAT_ID_GRUPO 
-	join argos.t_divulgacao_automation d on d.PAINEL_ID = a.ID  
+	join argos.t_painel_automation_hora_divulgacao d on d.PAINEL_ID = a.ID  
 	join argos.t_horario_divulgacao_automation e on e.ID  = d.HORA_DIVULGACAO_ID 
 	join argos.t_trabalho_divulgacao_automation f on f.ID = e.ID_TRABALHO  
 where a.ID = ':ID' 
