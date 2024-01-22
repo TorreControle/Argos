@@ -46,6 +46,7 @@ namespace ArgosAutomation
             IScheduler scheduler = await factory.GetScheduler();
             await scheduler.Start();
 
+            //
             try
             {
                 //
@@ -161,7 +162,7 @@ Erro no carregamento dos trabalhos devido a {ex.Message}
 🕒 Data e hora: {DateTime.Now}",
                                         parseMode: ParseMode.Markdown,
                                         cancellationToken: Utilities.cts);
-            ;
+
             //
             Console.ReadKey();
 

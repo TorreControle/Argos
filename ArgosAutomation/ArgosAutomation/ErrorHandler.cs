@@ -1,5 +1,4 @@
-﻿using System.Media;
-using Telegram.Bot;
+﻿using Telegram.Bot;
 using Telegram.Bot.Types.Enums;
 
 namespace ArgosAutomation
@@ -54,7 +53,7 @@ Erro de {ex.GetType()} detectado
 {ex}");
             Console.BackgroundColor = ConsoleColor.Black;
             Console.ForegroundColor = ConsoleColor.Gray;
-            Program.sound = new SoundPlayer();
+            Program.sound = new();
 
             //
             Program.sound.SoundLocation = @$"{Tools.GetDirectoryProject()}\Resources\AlertError.wav";
