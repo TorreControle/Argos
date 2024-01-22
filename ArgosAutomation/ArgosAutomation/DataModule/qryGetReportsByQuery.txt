@@ -1,8 +1,11 @@
 ﻿select 
 	a.ID as ID_PAINEL,
 	a.NOME as NOME_PAINEL,
+	g.CHAT_ID as CHAT_ID_GRUPO,
 	a.ATIVO as ATIVO
 from argos.t_painel_automation a
 	join argos.t_painel_automation_query_governanca d on d.PAINEL_ID = a.ID 
 	join argos.t_query_governanca e on e.ID = d.QUERY_ID
+	join argos.t_painel_automation_grupo_telegram f on f.ID_PAINEL = a.ID
+	join argos.t_grupo_telegram g on g.CHAT_ID = f.CHAT_ID_GRUPO 
 where e.ID = ':ID_QUERY';

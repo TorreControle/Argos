@@ -7,7 +7,7 @@ namespace ArgosAutomation.Databases
     public class DataModuleOdbc
     {
         private readonly string? resourceName = string.Empty;
-        private OdbcConnection? OdbcConection;
+        public OdbcConnection? OdbcConection;
         private Assembly assembly;
         private OdbcTransaction? transaction = null;
         public bool Conected = false;

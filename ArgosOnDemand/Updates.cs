@@ -55,7 +55,7 @@ namespace ArgosOnDemand
 
             // Monitoramento de atualizações do bot. 
 
-            await Monitoring.SendLog();
+            //await Monitoring.SendLog();
 
 
             // Orientação a banco de dados de comandos.
@@ -112,7 +112,7 @@ namespace ArgosOnDemand
                     else if (messageText.Contains(':'))
                     {
                         text = text[..text.IndexOf(":")];
-                    }                    
+                    }
 
 
                     // Verifica se a mensagem de texto enviada é um comando ou não.
@@ -281,7 +281,7 @@ namespace ArgosOnDemand
                     {
                         if (text.StartsWith("argos"))
                         {
-                            if (text == "argos") 
+                            if (text == "argos")
                             {
                                 return;
                             }

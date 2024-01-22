@@ -174,7 +174,7 @@ namespace ArgosAutomation.Jobs
                             // Caso algum painel esteja sendo gerado ele envia um alerta ao usuário.
                             await Utilities.botClient.SendTextMessageAsync(
                                 chatId: UpdateHandler.ChatId,
-                                text: $"🤖: {UpdateHandler.FirstName}! Sua solicitação do painel de *{UpdateHandler.MessageText}* foi um pouco adiada pois estou gerando o report automático de *{ReportName}* no grupo do *{GroupName}*, você receberá os dados atualizados de *{UpdateHandler.MessageText}* em breve!.",
+                                text: $"🤖: {UpdateHandler.FirstName}! Sua solicitação do painel de *{UpdateHandler.MessageText}* foi um pouco adiada pois estou gerando o report automático de *{ReportName}* no grupo do *{GroupName[0]}*, você receberá os dados atualizados de *{UpdateHandler.MessageText}* em breve!.",
                                 parseMode: ParseMode.Markdown,
                                 cancellationToken: Utilities.cts);
 

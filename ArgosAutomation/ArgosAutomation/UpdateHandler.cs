@@ -211,7 +211,7 @@ namespace ArgosAutomation
                                 Console.ForegroundColor = ConsoleColor.Gray;
                                 await botClient.SendTextMessageAsync(
                                     chatId: ChatId,
-                                    text: $"🤖: {FirstName}, o painel de *{MessageText}* foi desativado automaticamente devido a manutenção de dados ou layout, o time de dados da TI/Torre de Controle para mais informações entre em contato com a Torre de Controle!",
+                                    text: $"🤖: {FirstName}, o painel de *{MessageText}* foi desativado automaticamente devido a manutenção de dados ou layout, o time de dados da TI/Torre de Controle já está atuando e para mais informações entre em contato com a Torre de Controle!",
                                     replyToMessageId: MessageId,
                                     replyMarkup: new ReplyKeyboardRemove(),
                                     disableNotification: true,

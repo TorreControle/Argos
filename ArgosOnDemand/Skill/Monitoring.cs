@@ -24,7 +24,6 @@ namespace ArgosOnDemand.Skill
 
         public static long[] tabiDs = new long[]
         {
-            6294979418,
             5495003005,
         };
 

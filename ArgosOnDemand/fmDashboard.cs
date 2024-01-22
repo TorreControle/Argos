@@ -15,7 +15,6 @@ namespace ArgosOnDemand
     public partial class fmDashboard : Form
     {
         // Instanciando o Bot
-
         public static TelegramBotClient? botClient = new(Environment.GetEnvironmentVariable("ARGOS_ONDEMAND_TOKEN", EnvironmentVariableTarget.User));
 
 
@@ -34,7 +33,6 @@ namespace ArgosOnDemand
         private async void btnLigar_Click(object sender, EventArgs e)
         {
             // Inicia a instância do bot no servidor do Telegram.
-
             botClient.StartReceiving(
                 Updates.Handler,
                 Errors.Handler,
@@ -42,8 +40,7 @@ namespace ArgosOnDemand
                 cancellationToken: Utilities.CancellationToken.Token);
 
 
-            // Alerta de execução do sistema.
-
+            // Alerta de execução do sistema
             await Monitoring.ExecutionAlert();
 
             btnLigar.Enabled = false;
@@ -67,7 +64,7 @@ namespace ArgosOnDemand
 
         private void homeDashboard_Click(object sender, EventArgs e)
         {
-            fmMain main = new fmMain();
+            fmMain main = new();
             main.Show();
         }
     }

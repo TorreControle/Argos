@@ -123,7 +123,7 @@ namespace ArgosAutomation.Jobs
                     Odbc.dtm.ParamByName(qry, ":SCRIPT", Script);
                     DataTable dts = Odbc.dtm.ExecuteQuery(qry);
                     int outdated = Tools.HasTrueValueInColumn(dts, "ALERTA");
-                    //outdated = 0;
+                    //outdated = 1;
 
                     // Obtém informações dos grupos na qual a query em questão está relacionada.
                     Odbc.Connect("ArgosAutomation", "DSN=SRVAZ31-ARGOS");
@@ -167,8 +167,8 @@ namespace ArgosAutomation.Jobs
                         for (int j = 0; j < dtc.Rows.Count; j++)
                         {
                             ReportId = int.Parse((string)dtc.Rows[j]["ID_PAINEL"]);
-                            ReportName.Add((string)dtc.Rows[j]["NOME_PAINEL"]);
                             Enable = int.Parse((string)dtc.Rows[j]["ATIVO"]);
+                            ReportName.Add((string)dtc.Rows[j]["NOME_PAINEL"]);
 
                             // Verifica se ele já está desativado ou não.
                             if (Enable == 1)
@@ -233,8 +233,8 @@ namespace ArgosAutomation.Jobs
                         for (int j = 0; j < dtc.Rows.Count; j++)
                         {
                             ReportId = int.Parse((string)dtc.Rows[j]["ID_PAINEL"]);
-                            ReportName.Add((string)dtc.Rows[j]["NOME_PAINEL"]);
                             Enable = int.Parse((string)dtc.Rows[j]["ATIVO"]);
+                            ReportName.Add((string)dtc.Rows[j]["NOME_PAINEL"]);
 
                             // Verifica se ele já está desativado ou não.
                             if (Enable == 0)

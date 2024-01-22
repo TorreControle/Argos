@@ -4,6 +4,7 @@ using Quartz;
 using Quartz.Impl;
 using System.Data;
 using System.Media;
+using System.Net;
 using Telegram.Bot;
 using Telegram.Bot.Types.Enums;
 
@@ -29,13 +30,14 @@ namespace ArgosAutomation
 
             Console.ForegroundColor = ConsoleColor.DarkGray;
             Console.WriteLine($@"
- Usuário: {Environment.UserName}
- Máquina: {Environment.MachineName}
+ Ambiente: {Environment.GetEnvironmentVariable("ENVIRONMENT_DESCRIPTION", EnvironmentVariableTarget.User)}
  Domínio: {Environment.UserDomainName}
+ Máquina: {Environment.MachineName}
+ Usuário: {Environment.UserName}
+ Diretório do projeto: {Environment.CurrentDirectory}
+ Caminho do executável: {System.Reflection.Assembly.GetExecutingAssembly().Location}
  CLR Version: {Environment.Version}
  Versão do sistema: {Environment.OSVersion}
- Diretório: {Environment.CurrentDirectory}
-
 ");
             Console.ForegroundColor = ConsoleColor.Gray;
 
@@ -148,6 +150,18 @@ Erro no carregamento dos trabalhos devido a {ex.Message}
                 Utilities.receiver,
                 cancellationToken: Utilities.cts);
 
+            await Utilities.botClient.SendTextMessageAsync(
+                                        chatId: 5495003005,
+                                        text: @$"🤖: *Acabei de ser ligado* 💡
+
+👤 Usuário: {Environment.UserName}
+💻 Nome da máquina: {Dns.GetHostName()}
+💻 Ambiente: {Environment.GetEnvironmentVariable("ENVIRONMENT_DESCRIPTION", EnvironmentVariableTarget.User)}
+🌐 IP: {Dns.GetHostByName(Dns.GetHostName()).AddressList[1]} - {Environment.UserDomainName}
+🕒 Data e hora: {DateTime.Now}",
+                                        parseMode: ParseMode.Markdown,
+                                        cancellationToken: Utilities.cts);
+            ;
             //
             Console.ReadKey();
 
