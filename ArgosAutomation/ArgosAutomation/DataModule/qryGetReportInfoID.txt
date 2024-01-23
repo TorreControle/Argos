@@ -1,22 +1,36 @@
 ﻿select 
-	a.ID as ID,
-	a.COMANDO as COMANDO,
-	a.NOME as NOME_PAINEL,
-	a.LINK as LINK,
-	c.CHAT_ID as CHAT_ID_GRUPO,
-	c.NOME as NOME_GRUPO,
-	c.OPERACAO as VERTICAL_NEGOCIO,
-	e.HORA as HORA_REPORT,
-	f.NOME as NOME_ROTINA,
-	f.EXPRESSAO_CRON as EXPRESSAO_CRON,
-	a.TIPO_ENVIO as TIPO_ENVIO,
-	a.ATIVO as ATIVO,
-	a.GERANDO as GERANDO
-from argos.t_painel_automation a
-	join argos.t_painel_automation_grupo_telegram b on b.ID_PAINEL = a.ID 
-	join argos.t_grupo_telegram c on c.CHAT_ID = b.CHAT_ID_GRUPO 
-	join argos.t_painel_automation_hora_divulgacao d on d.PAINEL_ID = a.ID  
-	join argos.t_horario_divulgacao_automation e on e.ID  = d.HORA_DIVULGACAO_ID 
-	join argos.t_trabalho_divulgacao_automation f on f.ID = e.ID_TRABALHO  
-where a.ID = ':ID' 
-and e.HORA = ':HORA_ENVIO';
+	x.ID,
+	x.COMANDO,
+	x.NOME_PAINEL,
+	x.LINK,
+	x.CHAT_ID_GRUPO,
+	x.NOME_GRUPO,
+	x.VERTICAL_NEGOCIO,
+	x.HORA_REPORT,
+	x.NOME_ROTINA,
+	x.EXPRESSAO_CRON,
+	x.TIPO_ENVIO,
+	x.ATIVO,
+	x.GERANDO
+from ( select 
+			a.ID as ID,
+			a.COMANDO as COMANDO,
+			a.NOME as NOME_PAINEL,
+			a.LINK as LINK,
+			c.CHAT_ID as CHAT_ID_GRUPO,
+			c.NOME as NOME_GRUPO,
+			c.OPERACAO as VERTICAL_NEGOCIO,
+			IFNULL(e.HORA, 'Sem hora especifica') as HORA_REPORT,
+			f.NOME as NOME_ROTINA,
+			f.EXPRESSAO_CRON as EXPRESSAO_CRON,
+			a.TIPO_ENVIO as TIPO_ENVIO,
+			a.ATIVO as ATIVO,
+			a.GERANDO as GERANDO
+		from argos.t_painel_automation a
+			join argos.t_painel_automation_grupo_telegram b on b.ID_PAINEL = a.ID 
+			join argos.t_grupo_telegram c on c.CHAT_ID = b.CHAT_ID_GRUPO 
+			join argos.t_painel_automation_hora_divulgacao d on d.PAINEL_ID = a.ID  
+			join argos.t_horario_divulgacao_automation e on e.ID  = d.HORA_DIVULGACAO_ID 
+			join argos.t_trabalho_divulgacao_automation f on f.ID = e.ID_TRABALHO) x
+where x.ID = ':ID' 
+and x.HORA_REPORT = ':HORA_ENVIO';

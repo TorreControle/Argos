@@ -151,6 +151,18 @@ namespace ArgosAutomation
                         }
                     }
 
+                    //
+                    Odbc.Connect("ArgosAutomation", "DSN=SRVAZ31-ARGOS");
+                    qry = "qryGetGroupsTelegram.txt";
+                    var dtb = Odbc.dtm.ExecuteQuery(qry);
+                    List<long?> listGroups = new();
+
+                    //
+                    for (int i = 0; i <= dtb.Rows.Count - 1; i++)
+                    {
+                        listGroups.Add(long.Parse((string)dtb.Rows[i]["CHAT_ID"]));
+                    }
+
                     // Verifica se a solicitação em questão foi de painel, caso o valor da variável "message" contenha na lista "reportsCommands" o código segue.
                     if (reportsCommands.Contains(message))
                     {
@@ -421,7 +433,10 @@ namespace ArgosAutomation
                     // Comando para a atualização geral de todos os BI's de um grupo
                     if (message.Equals("argosnosatualize"))
                     {
+                        if (listGroups.Contains(ChatId))
+                        {
 
+                        }
                     }
 
                     // Grava todas as mensagens que o Argos recebe no banco de dados.

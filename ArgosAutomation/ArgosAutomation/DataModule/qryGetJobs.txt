@@ -1,7 +1,7 @@
 ﻿SELECT 
 	a.ID as ID,
 	a.NOME as NOME,
-	IFNULL(b.HORA, 'Sem hora espcifica') as HORA,
+	IFNULL(b.HORA, 'Sem hora especifica') as HORA,
 	a.EXPRESSAO_CRON as EXPRESSAO_CRON,
 	a.TIPO as TIPO
 FROM argos.t_trabalho_divulgacao_automation a
