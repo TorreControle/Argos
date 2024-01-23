@@ -1,0 +1,1 @@
+select * from argos.t_trabalho_divulgacao_automation;
