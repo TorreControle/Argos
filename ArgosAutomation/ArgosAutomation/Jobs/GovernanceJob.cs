@@ -123,7 +123,7 @@ namespace ArgosAutomation.Jobs
                     Odbc.dtm.ParamByName(qry, ":SCRIPT", Script);
                     DataTable dts = Odbc.dtm.ExecuteQuery(qry);
                     int outdated = Tools.HasTrueValueInColumn(dts, "ALERTA");
-                    //outdated = 1;
+                    //outdated = 0;
 
                     // Obtém informações dos grupos na qual a query em questão está relacionada.
                     Odbc.Connect("ArgosAutomation", "DSN=SRVAZ31-ARGOS");
@@ -148,13 +148,6 @@ namespace ArgosAutomation.Jobs
                         Console.WriteLine(@$" [{DateTime.Now:dd/MM/yyyy - HH:mm:ss}] GovernanceJob: Dados de {GroupData} foram encontrados desatualizados.");
                         Console.BackgroundColor = ConsoleColor.Black;
                         Console.ForegroundColor = ConsoleColor.Gray;
-                        await Utilities.botClient.SendTextMessageAsync(
-                            chatId: /*5495003005*/ -975484125,
-                            text: @$"@labtorre e @TorreSul
-
-🤖: Pessoal, os dados de *{GroupData}* estão desatualizados ⚠️.",
-                            parseMode: ParseMode.Markdown,
-                            cancellationToken: Utilities.cts);
 
                         // Busca pelos paineis que estão relacionados a query em questão.
                         Odbc.Connect("ArgosAutomation", "DSN=SRVAZ31-ARGOS");
@@ -162,6 +155,19 @@ namespace ArgosAutomation.Jobs
                         Odbc.dtm.CleanParamters(qry);
                         Odbc.dtm.ParamByName(qry, ":ID_QUERY", QueryId.ToString());
                         DataTable dtc = Odbc.dtm.ExecuteQuery(qry);
+                        int enable = Tools.HasTrueValueInColumn(dtc, "ATIVO");
+
+                        //
+                        if (enable == 1)
+                        {
+                            await Utilities.botClient.SendTextMessageAsync(
+                                chatId: /*5495003005*/ -975484125,
+                                text: @$"@labtorre e @TorreSul
+
+🤖: Pessoal, os dados de *{GroupData}* estão desatualizados ⚠️.",
+                                parseMode: ParseMode.Markdown,
+                                cancellationToken: Utilities.cts);
+                        }
 
                         // Percorre por todos paineis encontrados.
                         for (int j = 0; j < dtc.Rows.Count; j++)
@@ -214,13 +220,6 @@ namespace ArgosAutomation.Jobs
                         Console.WriteLine(@$" [{DateTime.Now:dd/MM/yyyy - HH:mm:ss}] GovernanceJob: Dados de {GroupData} foram reestabelecidos.");
                         Console.BackgroundColor = ConsoleColor.Black;
                         Console.ForegroundColor = ConsoleColor.Gray;
-                        await Utilities.botClient.SendTextMessageAsync(
-                            chatId: 5495003005 /*- 975484125*/,
-                            text: @$"@labtorre e @TorreSul
-
-🤖: Os dados de {GroupData} estão atualizados ✅ Execelente trabalho time.",
-                            parseMode: ParseMode.Markdown,
-                            cancellationToken: Utilities.cts);
 
                         // Busca pelos paineis que estão relacionados a query em questão.
                         Odbc.Connect("ArgosAutomation", "DSN=SRVAZ31-ARGOS");
@@ -228,6 +227,19 @@ namespace ArgosAutomation.Jobs
                         Odbc.dtm.CleanParamters(qry);
                         Odbc.dtm.ParamByName(qry, ":ID_QUERY", QueryId.ToString());
                         DataTable dtc = Odbc.dtm.ExecuteQuery(qry);
+                        int enable = Tools.HasTrueValueInColumn(dtc, "ATIVO");
+
+                        //
+                        if (enable == 0)
+                        {
+                            await Utilities.botClient.SendTextMessageAsync(
+                                chatId: /*5495003005*/ -975484125,
+                                text: @$"@labtorre e @TorreSul
+
+🤖: Os dados de {GroupData} estão atualizados ✅ Execelente trabalho time.",
+                                parseMode: ParseMode.Markdown,
+                                cancellationToken: Utilities.cts);
+                        }
 
                         // Percorre por todos paineis encontrados.
                         for (int j = 0; j < dtc.Rows.Count; j++)
@@ -254,8 +266,10 @@ namespace ArgosAutomation.Jobs
                                 //Odbc.dtm.Disconect();
 
                             }
-
                         }
+
+
+
 
                         // Percorre os grupos em que a query está relacionada.
                         for (int k = 0; k < dtx.Rows.Count; k++)

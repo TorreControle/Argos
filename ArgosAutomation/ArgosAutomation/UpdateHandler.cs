@@ -433,9 +433,31 @@ namespace ArgosAutomation
                     // Comando para a atualização geral de todos os BI's de um grupo
                     if (message.Equals("argosnosatualize"))
                     {
+                        //
+                        Odbc.Connect("ArgosAutomation", "DSN=SRVAZ31-ARGOS");
+                        qry = "qryGetReportsByGroup.txt";
+                        Odbc.dtm.CleanParamters(qry);
+                        Odbc.dtm.ParamByName(qry, ":CHAT_ID", ChatId.ToString());
+                        var dtw = Odbc.dtm.ExecuteQuery(qry);
+
+                        //
+                        await botClient.SendTextMessageAsync(
+                                    chatId: ChatId,
+                                    text: $"🤖: Claro, {FirstName}! Gerando em alguns segundos começo os envios dos reports.",
+                                    replyToMessageId: MessageId,
+                                    disableNotification: true,
+                                    parseMode: ParseMode.Markdown,
+                                    cancellationToken: cancellationToken);
+
+                        //
                         if (listGroups.Contains(ChatId))
                         {
-
+                            for (int i = 0; i < dtw.Rows.Count; i++)
+                            {
+                                Report = new((string)dtw.Rows[i]["COMANDO_PAINEL"]);
+                                await Report.Generate();
+                                await Report.ToSend(ChatId);
+                            }
                         }
                     }
 

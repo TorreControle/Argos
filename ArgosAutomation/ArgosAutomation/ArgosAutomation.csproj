@@ -29,6 +29,7 @@
     <None Remove="DataModule\qryGetReportInfoID.txt" />
     <None Remove="DataModule\qryGetReportInfoName.txt" />
     <None Remove="DataModule\qryGetReports.txt" />
+    <None Remove="DataModule\qryGetReportsByGroup.txt" />
     <None Remove="DataModule\qryGetReportsByHour.txt" />
     <None Remove="DataModule\qryGetReportsByQuery.txt" />
     <None Remove="DataModule\qryInsertHistoricDivulgations.txt" />
@@ -51,6 +52,7 @@
     <EmbeddedResource Include="DataModule\qryGetGroupsReport.txt" />
     <EmbeddedResource Include="DataModule\qryGetReports.txt" />
     <EmbeddedResource Include="DataModule\qryGetQueriesGovernance.txt" />
+    <EmbeddedResource Include="DataModule\qryGetReportsByGroup.txt" />
     <EmbeddedResource Include="DataModule\qryGetReportsByQuery.txt" />
     <EmbeddedResource Include="DataModule\qryInsertUpdates.txt" />
     <EmbeddedResource Include="DataModule\qryInsertHistoricDivulgations.txt" />
