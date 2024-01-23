@@ -194,7 +194,7 @@ namespace ArgosAutomation.Jobs
                             Console.ForegroundColor = ConsoleColor.Gray;
                             await Utilities.botClient.SendTextMessageAsync(
                                     chatId: ChatIdGroup[j],
-                                    text: $"🤖: Pessoal, o report das *{ReportTime}* do painel de *{ReportName}* foi cancelado automaticamente devido a manutenção nos dados ou no layout, o time de dados da TI/Torre de Controle já está atuando e assim que normalizar ativarei novamente esse painel!",
+                                    text: $"🤖: Pessoal, o report das *{ReportTime}* do painel de *{ReportName}* foi cancelado automaticamente pois ele está em manutenção, o time de dados da TI/Torre de Controle já está atuando e assim que normalizar ativarei novamente esse painel!",
                                     parseMode: ParseMode.Markdown,
                                     cancellationToken: Utilities.cts);
                         }

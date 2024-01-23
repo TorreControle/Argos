@@ -1,0 +1,38 @@
+{
+	"folders": {},
+	"connections": {
+		"mariaDB-18d3758ef1b-7fc3a31c0e2f339c": {
+			"provider": "mysql",
+			"driver": "mariaDB",
+			"name": "ARGOS_PRODUCAO",
+			"save-password": true,
+			"show-system-objects": true,
+			"virtual-model-id": "mariaDB-18834a82504-3c51cef5ff9fbf1a",
+			"configuration": {
+				"host": "172.18.0.14",
+				"port": "3306",
+				"database": "argos",
+				"url": "jdbc:mariadb://172.18.0.14:3306/argos",
+				"configurationType": "MANUAL",
+				"home": "C:\\Program Files\\MySQL\\MySQL Server 8.0",
+				"type": "dev",
+				"auth-model": "native"
+			}
+		}
+	},
+	"virtual-models": {"mariaDB-18834a82504-3c51cef5ff9fbf1a":{"argos":{":t_teste_data":{"constraints":{"VIRTUAL_PK":{"type":"vpk","useAllColumns":true}}},":t_teste_insert":{"constraints":{"VIRTUAL_PK":{"type":"vpk","useAllColumns":true}}},":t_painel_automation_hora_divulgacao":{"constraints":{"VIRTUAL_PK":{"type":"vpk","useAllColumns":true}}}}}},
+	"connection-types": {
+		"dev": {
+			"name": "Desenvolvimento",
+			"color": "255,255,255",
+			"description": "Banco de dados de desenvolvimento",
+			"auto-commit": true,
+			"confirm-execute": false,
+			"confirm-data-change": false,
+			"smart-commit": false,
+			"smart-commit-recover": false,
+			"auto-close-transactions": true,
+			"close-transactions-period": 1800
+		}
+	}
+}

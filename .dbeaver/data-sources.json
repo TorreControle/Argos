@@ -1,0 +1,60 @@
+{
+	"folders": {},
+	"connections": {
+		"mariaDB-18d375932a2-5be2323a9b350e65": {
+			"provider": "mysql",
+			"driver": "mariaDB",
+			"name": "ARGOS_PRODUCAO",
+			"save-password": true,
+			"show-system-objects": true,
+			"configuration": {
+				"host": "172.18.0.14",
+				"port": "3306",
+				"database": "argos",
+				"url": "jdbc:mariadb://172.18.0.14:3306/argos",
+				"configurationType": "MANUAL",
+				"home": "C:\\Program Files\\MySQL\\MySQL Server 8.0",
+				"type": "dev",
+				"auth-model": "native"
+			}
+		},
+		"mariaDB-18d37594012-5884cdbc8a76c74f": {
+			"provider": "mysql",
+			"driver": "mariaDB",
+			"name": "ARGOS_TESTE",
+			"save-password": true,
+			"show-system-objects": true,
+			"configuration": {
+				"host": "10.4.5.99",
+				"port": "3306",
+				"database": "argos",
+				"url": "jdbc:mariadb://10.4.5.99:3306/argos",
+				"configurationType": "MANUAL",
+				"home": "C:\\Program Files\\MySQL\\MySQL Server 8.0",
+				"type": "dev",
+				"auth-model": "native"
+			}
+		}
+	},
+	"virtual-models": {"mariaDB-18d375932a2-5be2323a9b350e65":{"argos":{":t_teste_data":{"constraints":{"VIRTUAL_PK":{"type":"vpk","useAllColumns":true}}},":t_teste_insert":{"constraints":{"VIRTUAL_PK":{"type":"vpk","useAllColumns":true}}},":t_painel_automation_hora_divulgacao":{"constraints":{"VIRTUAL_PK":{"type":"vpk","useAllColumns":true}}}}},"mariaDB-18d37594012-5884cdbc8a76c74f":{"argos":{":t_teste_data":{"constraints":{"VIRTUAL_PK":{"type":"vpk","useAllColumns":true}}},":t_teste_insert":{"constraints":{"VIRTUAL_PK":{"type":"vpk","useAllColumns":true}}}}}},
+	"network-profiles": {
+		"willian.silva": {
+			"name": "willian.silva",
+			"handlers": {}
+		}
+	},
+	"connection-types": {
+		"dev": {
+			"name": "Desenvolvimento",
+			"color": "255,255,255",
+			"description": "Banco de dados de desenvolvimento",
+			"auto-commit": true,
+			"confirm-execute": false,
+			"confirm-data-change": false,
+			"smart-commit": false,
+			"smart-commit-recover": false,
+			"auto-close-transactions": true,
+			"close-transactions-period": 1800
+		}
+	}
+}
