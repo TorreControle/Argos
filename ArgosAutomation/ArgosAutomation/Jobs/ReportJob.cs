@@ -169,7 +169,7 @@ namespace ArgosAutomation.Jobs
                         }
                         else
                         {
-                            Console.BackgroundColor = ConsoleColor.Red;
+                            Console.BackgroundColor = ConsoleColor.DarkYellow;
                             Console.ForegroundColor = ConsoleColor.DarkRed;
                             Console.WriteLine(@$" [{DateTime.Now:dd/MM/yyyy - HH:mm:ss}] ReportJob: Conflito entre de reports, uma pessoa chamado(a) {UpdateHandler.FirstName} {UpdateHandler.LastName} solicitou o painel de {UpdateHandler.MessageText} em paralelo ao trabalho {JobName} durante o report de {ReportName}.");
                             Console.BackgroundColor = ConsoleColor.Black;
@@ -182,11 +182,32 @@ namespace ArgosAutomation.Jobs
                                 cancellationToken: Utilities.cts);
                             await Utilities.botClient.SendTextMessageAsync(
                                 chatId: UpdateHandler.ChatId,
-                                text: $"🤖: {UpdateHandler.FirstName}! Sua solicitação do painel de *{UpdateHandler.MessageText}* foi um pouco adiada pois estou gerando o report automático de *{ReportName}* no grupo do *{GroupName[0]}*, você receberá os dados atualizados de *{UpdateHandler.MessageText}* em breve!.",
+                                text: $"🤖: {UpdateHandler.FirstName}! Sua solicitação do painel de *{UpdateHandler.MessageText}* foi um pouco adiada pois estou executando a {JobName} no grupo do *{GroupName[0]}*, você receberá os dados atualizados de *{UpdateHandler.MessageText}* em breve!.",
                                 parseMode: ParseMode.Markdown,
                                 cancellationToken: Utilities.cts);
 
+                            // Caso tiver, começa a gerar o painel solicitado e faz o envio priorizando o report automatico.
+                            await Report.Generate();
+
+                            // Faz um insert na tabela "argos.t_historico_divulgacao_automation" para controle e geração de dados dos envios de report e o envio do print no telegram.
+                            for (int j = 0; j < ChatIdGroup.Count; j++)
+                            {
+                                await Report.ToSend(ChatIdGroup[j]);
+                                Odbc.Connect("ArgosAutomation", "DSN=SRVAZ31-ARGOS");
+                                qry = "qryInsertHistoricDivulgations.txt";
+                                Odbc.dtm.CleanParamters(qry);
+                                Odbc.dtm.ParamByName(qry, ":ID_HISTORICO", Guid.NewGuid().ToString());
+                                Odbc.dtm.ParamByName(qry, ":ID_PAINEL", Id.ToString());
+                                Odbc.dtm.ParamByName(qry, ":NOME_PAINEL", ReportName);
+                                Odbc.dtm.ParamByName(qry, ":OPERACAO", Operation[j]);
+                                Odbc.dtm.ParamByName(qry, ":HORA_AGENDAMENTO", ReportTime);
+                                Odbc.dtm.ExecuteNonQuery(qry);
+                                Console.WriteLine(@$" [{DateTime.Now:dd/MM/yyyy - HH:mm:ss}] ReportJob: Insert na tabela argos.t_historico_divulgacao_automation do report de {ReportName} feito as {DateTime.Now:HH:mm:ss} foi realizado com exito.");
+                                //Odbc.dtm.Disconect(); 
+                            }
+
                         }
+
 
                     }
                     else

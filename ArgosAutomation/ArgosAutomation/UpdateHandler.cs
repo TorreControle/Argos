@@ -497,8 +497,9 @@ namespace ArgosAutomation
                             cancellationToken: cancellationToken);
                         await botClient.SendTextMessageAsync(
                             chatId: ChatId,
-                            text: $"🤖: Claro, {FirstName}! Gerando em alguns segundos começo os envios dos reports.",
+                            text: $"🤖: Claro, {FirstName}! Em alguns segundos começo os envios dos reports.",
                             replyToMessageId: MessageId,
+                            replyMarkup: new ReplyKeyboardRemove(),
                             disableNotification: true,
                             parseMode: ParseMode.Markdown,
                             cancellationToken: cancellationToken);
