@@ -89,6 +89,10 @@ namespace ArgosAutomation.Jobs
  [{DateTime.Now:dd/MM/yyyy - HH:mm:ss}] GovernanceJob: {JobName} em execução.");
 
             // Alerta no telegram para os administradores sobre a execução dos trabalhos.
+            await Utilities.botClient.SendChatActionAsync(
+                chatId: 5495003005,
+                chatAction: ChatAction.Typing,
+                cancellationToken: Utilities.cts);
             await Utilities.botClient.SendTextMessageAsync(
                 chatId: 5495003005,
                 text: $@"*{JobName}* em execução 👮🏾‍♂️.
@@ -160,6 +164,10 @@ namespace ArgosAutomation.Jobs
                         //
                         if (enable == 1)
                         {
+                            await Utilities.botClient.SendChatActionAsync(
+                                chatId: /*5495003005*/ -975484125,
+                                chatAction: ChatAction.Typing,
+                                cancellationToken: Utilities.cts);
                             await Utilities.botClient.SendTextMessageAsync(
                                 chatId: /*5495003005*/ -975484125,
                                 text: @$"@labtorre e @TorreSul
@@ -202,13 +210,17 @@ namespace ArgosAutomation.Jobs
                             if (Enable == 1)
                             {
                                 // Faz um alerta nos grupos em que a query está relacionada.
+                                await Utilities.botClient.SendChatActionAsync(
+                                    chatId: ChatIdGroup[k],
+                                    chatAction: ChatAction.Typing,
+                                    cancellationToken: Utilities.cts);
                                 await Utilities.botClient.SendTextMessageAsync(
-                                chatId: ChatIdGroup[k],
-                                text: @$"🤖: Pessoal, acabei de executar a governaça dos dados de {GroupData} e encontrei inconsistências 😢 segue lista dos BI's que acabarem de ser desativados devido a desatualização de dados: 
+                                    chatId: ChatIdGroup[k],
+                                    text: @$"🤖: Pessoal, acabei de executar a governaça dos dados de {GroupData} e encontrei inconsistências 😢 segue lista dos BI's que acabarem de ser desativados devido a desatualização de dados: 
 
 *{string.Join("\n", ReportName.ToArray())}*",
-                                parseMode: ParseMode.Markdown,
-                                cancellationToken: Utilities.cts);
+                                    parseMode: ParseMode.Markdown,
+                                    cancellationToken: Utilities.cts);
                             }
                         }
                     }
@@ -232,6 +244,10 @@ namespace ArgosAutomation.Jobs
                         //
                         if (enable == 0)
                         {
+                            await Utilities.botClient.SendChatActionAsync(
+                                chatId: /*5495003005*/ -975484125,
+                                chatAction: ChatAction.Typing,
+                                cancellationToken: Utilities.cts);
                             await Utilities.botClient.SendTextMessageAsync(
                                 chatId: /*5495003005*/ -975484125,
                                 text: @$"@labtorre e @TorreSul
@@ -268,22 +284,23 @@ namespace ArgosAutomation.Jobs
                             }
                         }
 
-
-
-
                         // Percorre os grupos em que a query está relacionada.
                         for (int k = 0; k < dtx.Rows.Count; k++)
                         {
                             if (Enable == 0)
                             {
                                 // Faz um alerta nos grupos em que a query está relacionada.
+                                await Utilities.botClient.SendChatActionAsync(
+                                    chatId: ChatIdGroup[k],
+                                    chatAction: ChatAction.Typing,
+                                    cancellationToken: Utilities.cts);
                                 await Utilities.botClient.SendTextMessageAsync(
-                                chatId: ChatIdGroup[k],
-                                text: @$"🤖: Os dados de {GroupData} foram reestabelecidos ✅ segue lista dos BI's que foram ativados e estão disponiveis novamente: 
+                                    chatId: ChatIdGroup[k],
+                                    text: @$"🤖: Os dados de {GroupData} foram reestabelecidos ✅ segue lista dos BI's que foram ativados e estão disponiveis novamente: 
 
 *{string.Join("\n", ReportName.ToArray())}*",
-                                parseMode: ParseMode.Markdown,
-                                cancellationToken: Utilities.cts);
+                                    parseMode: ParseMode.Markdown,
+                                    cancellationToken: Utilities.cts);
                             }
                         }
                     }
@@ -297,15 +314,19 @@ namespace ArgosAutomation.Jobs
             catch (Exception ex)
             {
                 // Tratamento de erros genéricos.
+                await Utilities.botClient.SendChatActionAsync(
+                    chatId: 5495003005,
+                    chatAction: ChatAction.Typing,
+                    cancellationToken: Utilities.cts);
                 await Utilities.botClient.SendTextMessageAsync(
-                chatId: 5495003005,
-                text: @$"*Manipulador de erros acionado* 🪲 - {DateTime.Now}
+                    chatId: 5495003005,
+                    text: @$"*Manipulador de erros acionado* 🪲 - {DateTime.Now}
 
 *Classe:* GovernanceJob.cs 🔎
 
 Erro no trabalho de *{JobName}* realizado as *{Time}* devido a {ex.Message}",
-                parseMode: ParseMode.Markdown,
-                cancellationToken: Utilities.cts);
+                    parseMode: ParseMode.Markdown,
+                    cancellationToken: Utilities.cts);
                 Console.BackgroundColor = ConsoleColor.DarkRed;
                 Console.ForegroundColor = ConsoleColor.Gray;
                 Console.WriteLine(@$"Manipulador de erros acionado - {DateTime.Now}

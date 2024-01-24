@@ -88,6 +88,10 @@ namespace ArgosAutomation.Jobs
                 Console.WriteLine(@$" [{DateTime.Now:dd/MM/yyyy - HH:mm:ss}] ReportJob: {JobName} em execução.");
 
                 // Alerta no telegram para os administradores sobre a execução dos trabalhos.
+                await Utilities.botClient.SendChatActionAsync(
+                    chatId: 5495003005,
+                    chatAction: ChatAction.Typing,
+                    cancellationToken: Utilities.cts);
                 await Utilities.botClient.SendTextMessageAsync(
                     chatId: 5495003005,
                     text: $@"*{JobName}* em execução 📊.
@@ -172,6 +176,10 @@ namespace ArgosAutomation.Jobs
                             Console.ForegroundColor = ConsoleColor.Gray;
 
                             // Caso algum painel esteja sendo gerado ele envia um alerta ao usuário.
+                            await Utilities.botClient.SendChatActionAsync(
+                                chatId: UpdateHandler.ChatId,
+                                chatAction: ChatAction.Typing,
+                                cancellationToken: Utilities.cts);
                             await Utilities.botClient.SendTextMessageAsync(
                                 chatId: UpdateHandler.ChatId,
                                 text: $"🤖: {UpdateHandler.FirstName}! Sua solicitação do painel de *{UpdateHandler.MessageText}* foi um pouco adiada pois estou gerando o report automático de *{ReportName}* no grupo do *{GroupName[0]}*, você receberá os dados atualizados de *{UpdateHandler.MessageText}* em breve!.",
@@ -192,11 +200,15 @@ namespace ArgosAutomation.Jobs
                             Console.WriteLine(@$" [{DateTime.Now:dd/MM/yyyy - HH:mm:ss}] ReportJob: O painel de {ReportName} não está ativo, abortando report.");
                             Console.BackgroundColor = ConsoleColor.Black;
                             Console.ForegroundColor = ConsoleColor.Gray;
+                            await Utilities.botClient.SendChatActionAsync(
+                                chatId: ChatIdGroup[j],
+                                chatAction: ChatAction.Typing,
+                                cancellationToken: Utilities.cts);
                             await Utilities.botClient.SendTextMessageAsync(
-                                    chatId: ChatIdGroup[j],
-                                    text: $"🤖: Pessoal, o report das *{ReportTime}* do painel de *{ReportName}* foi cancelado automaticamente pois ele está em manutenção, o time de dados da TI/Torre de Controle já está atuando e assim que normalizar ativarei novamente esse painel!",
-                                    parseMode: ParseMode.Markdown,
-                                    cancellationToken: Utilities.cts);
+                                chatId: ChatIdGroup[j],
+                                text: $"🤖: Pessoal, o report das *{ReportTime}* do painel de *{ReportName}* foi cancelado automaticamente pois ele está em manutenção, o time de dados da TI/Torre de Controle já está atuando e assim que normalizar ativarei novamente esse painel!",
+                                parseMode: ParseMode.Markdown,
+                                cancellationToken: Utilities.cts);
                         }
                     }
 
@@ -209,15 +221,19 @@ namespace ArgosAutomation.Jobs
             catch (Exception ex)
             {
                 // Tratamento de erros genéricos.
+                await Utilities.botClient.SendChatActionAsync(
+                    chatId: 5495003005,
+                    chatAction: ChatAction.Typing,
+                    cancellationToken: Utilities.cts);
                 await Utilities.botClient.SendTextMessageAsync(
-                chatId: 5495003005,
-                text: @$"*Manipulador de erros acionado* 🪲 - {DateTime.Now}
+                    chatId: 5495003005,
+                    text: @$"*Manipulador de erros acionado* 🪲 - {DateTime.Now}
 
 *Classe:* ReportJob.cs 📊
 
 Erro no trabalho da *{JobName}* realizado as *{ReportTime}* devido a {ex.Message}",
-                parseMode: ParseMode.Markdown,
-                cancellationToken: Utilities.cts);
+                    parseMode: ParseMode.Markdown,
+                    cancellationToken: Utilities.cts);
                 Console.BackgroundColor = ConsoleColor.DarkRed;
                 Console.ForegroundColor = ConsoleColor.Gray;
                 Console.WriteLine(@$"Manipulador de erros acionado - {DateTime.Now}

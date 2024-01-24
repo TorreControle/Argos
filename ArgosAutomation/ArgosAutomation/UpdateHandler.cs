@@ -103,9 +103,6 @@ namespace ArgosAutomation
             DataTable dt = Odbc.dtm.ExecuteQuery(qry);
             //Odbc.dtm.Disconect();
 
-            //var poiu = ChatId;
-            //var poiw = long.Parse((string)dt.Rows[0]["ID"]);
-
             // Verificação de usuário.
             if (ChatId == long.Parse((string)dt.Rows[0]["ID"]))
             {
@@ -183,6 +180,11 @@ namespace ArgosAutomation
                                 if (BeingGenerated == 0)
                                 {
                                     // Caso não tiver, começa a gerar o painel solicitado e faz o envio.
+
+                                    await botClient.SendChatActionAsync(
+                                        chatId: ChatId,
+                                        chatAction: ChatAction.Typing,
+                                        cancellationToken: cancellationToken);
                                     await botClient.SendTextMessageAsync(
                                         chatId: ChatId,
                                         text: $"🤖: Ok {FirstName}! Gerando dados de *{MessageText}*, envio em alguns instantes.",
@@ -203,6 +205,10 @@ namespace ArgosAutomation
                                     Console.WriteLine(@$" [{DateTime.Now:dd/MM/yyyy - HH:mm:ss}] UpdateHandler: Conflito entre de reports.");
                                     Console.BackgroundColor = ConsoleColor.Black;
                                     Console.ForegroundColor = ConsoleColor.Gray;
+                                    await botClient.SendChatActionAsync(
+                                        chatId: ChatId,
+                                        chatAction: ChatAction.Typing,
+                                        cancellationToken: cancellationToken);
                                     await botClient.SendTextMessageAsync(
                                         chatId: ChatId,
                                         text: $"🤖: {FirstName}, aguarde um momento eu estou executando a *{ReportJob.JobName}* no grupo de *{ReportJob.GroupName[0]}*. Aguarde uns instantes e solicite o painel de *{MessageText}* novamente.",
@@ -221,6 +227,10 @@ namespace ArgosAutomation
                                 Console.WriteLine(@$" [{DateTime.Now:dd/MM/yyyy - HH:mm:ss}] UpdateHandler: O painel de {MessageText} não está ativo, abortando report.");
                                 Console.BackgroundColor = ConsoleColor.Black;
                                 Console.ForegroundColor = ConsoleColor.Gray;
+                                await botClient.SendChatActionAsync(
+                                    chatId: ChatId,
+                                    chatAction: ChatAction.Typing,
+                                    cancellationToken: cancellationToken);
                                 await botClient.SendTextMessageAsync(
                                     chatId: ChatId,
                                     text: $"🤖: {FirstName}, o painel de *{MessageText}* foi desativado automaticamente pois ele está em manutenção, o time de dados da TI/Torre de Controle já está atuando e para mais informações entre em contato com a Torre de Controle!",
@@ -234,14 +244,18 @@ namespace ArgosAutomation
                         }
                         else
                         {
+                            await botClient.SendChatActionAsync(
+                                chatId: ChatId,
+                                chatAction: ChatAction.Typing,
+                                cancellationToken: cancellationToken);
                             await botClient.SendTextMessageAsync(
-                                    chatId: ChatId,
-                                    text: $"🤖: {FirstName}, só é permitida a solicitação do painel de *{MessageText}* no grupo *\"{Report.GroupName[0]}\"* aqui no telegram, talvez você não faça parte desse grupo mas caso faça, solicite-o lá.",
-                                    replyToMessageId: MessageId,
-                                    replyMarkup: new ReplyKeyboardRemove(),
-                                    disableNotification: true,
-                                    parseMode: ParseMode.Markdown,
-                                    cancellationToken: cancellationToken);
+                                chatId: ChatId,
+                                text: $"🤖: {FirstName}, só é permitida a solicitação do painel de *{MessageText}* no grupo *\"{Report.GroupName[0]}\"* aqui no telegram, talvez você não faça parte desse grupo mas caso faça, solicite-o lá.",
+                                replyToMessageId: MessageId,
+                                replyMarkup: new ReplyKeyboardRemove(),
+                                disableNotification: true,
+                                parseMode: ParseMode.Markdown,
+                                cancellationToken: cancellationToken);
                         }
 
                     }
@@ -270,6 +284,10 @@ namespace ArgosAutomation
                                 if (c.Count >= 0) { r.Add(c.ToArray()); }
                                 replyButton.Keyboard = r.ToArray();
 
+                                await botClient.SendChatActionAsync(
+                                    chatId: ChatId,
+                                    chatAction: ChatAction.Typing,
+                                    cancellationToken: cancellationToken);
                                 await botClient.SendTextMessageAsync(
                                     chatId: ChatId,
                                     text: $"🤖: Claro! {FirstName}. Qual você quer ver?",
@@ -289,6 +307,10 @@ namespace ArgosAutomation
                                 if (c.Count >= 0) { r.Add(c.ToArray()); }
                                 replyButton.Keyboard = r.ToArray();
 
+                                await botClient.SendChatActionAsync(
+                                    chatId: ChatId,
+                                    chatAction: ChatAction.Typing,
+                                    cancellationToken: cancellationToken);
                                 await botClient.SendTextMessageAsync(
                                     chatId: ChatId,
                                     text: $"🤖: Claro! {FirstName}. Qual você quer ver?",
@@ -308,6 +330,10 @@ namespace ArgosAutomation
                                 if (c.Count >= 0) { r.Add(c.ToArray()); }
                                 replyButton.Keyboard = r.ToArray();
 
+                                await botClient.SendChatActionAsync(
+                                    chatId: ChatId,
+                                    chatAction: ChatAction.Typing,
+                                    cancellationToken: cancellationToken);
                                 await botClient.SendTextMessageAsync(
                                     chatId: ChatId,
                                     text: $"🤖: Claro! {FirstName}. Qual você quer ver?",
@@ -327,6 +353,10 @@ namespace ArgosAutomation
                                 if (c.Count >= 0) { r.Add(c.ToArray()); }
                                 replyButton.Keyboard = r.ToArray();
 
+                                await botClient.SendChatActionAsync(
+                                     chatId: ChatId,
+                                     chatAction: ChatAction.Typing,
+                                     cancellationToken: cancellationToken);
                                 await botClient.SendTextMessageAsync(
                                     chatId: ChatId,
                                     text: $"🤖: Claro! {FirstName}. Qual você quer ver?",
@@ -351,6 +381,10 @@ namespace ArgosAutomation
                                 if (c.Count >= 0) { r.Add(c.ToArray()); }
                                 replyButton.Keyboard = r.ToArray();
 
+                                await botClient.SendChatActionAsync(
+                                    chatId: ChatId,
+                                    chatAction: ChatAction.Typing,
+                                    cancellationToken: cancellationToken);
                                 await botClient.SendTextMessageAsync(
                                     chatId: ChatId,
                                     text: $"🤖: Claro! {FirstName}. Qual você quer ver?",
@@ -370,6 +404,10 @@ namespace ArgosAutomation
                                 if (c.Count >= 0) { r.Add(c.ToArray()); }
                                 replyButton.Keyboard = r.ToArray();
 
+                                await botClient.SendChatActionAsync(
+                                    chatId: ChatId,
+                                    chatAction: ChatAction.Typing,
+                                    cancellationToken: cancellationToken);
                                 await botClient.SendTextMessageAsync(
                                     chatId: ChatId,
                                     text: $"🤖: Claro! {FirstName}. Qual você quer ver?",
@@ -389,6 +427,10 @@ namespace ArgosAutomation
                                 if (c.Count >= 0) { r.Add(c.ToArray()); }
                                 replyButton.Keyboard = r.ToArray();
 
+                                await botClient.SendChatActionAsync(
+                                    chatId: ChatId,
+                                    chatAction: ChatAction.Typing,
+                                    cancellationToken: cancellationToken);
                                 await botClient.SendTextMessageAsync(
                                     chatId: ChatId,
                                     text: $"🤖: Claro! {FirstName}. Qual você quer ver?",
@@ -408,6 +450,10 @@ namespace ArgosAutomation
                                 if (c.Count >= 0) { r.Add(c.ToArray()); }
                                 replyButton.Keyboard = r.ToArray();
 
+                                await botClient.SendChatActionAsync(
+                                     chatId: ChatId,
+                                     chatAction: ChatAction.Typing,
+                                     cancellationToken: cancellationToken);
                                 await botClient.SendTextMessageAsync(
                                     chatId: ChatId,
                                     text: $"🤖: Claro! {FirstName}. Qual você quer ver?",
@@ -420,6 +466,10 @@ namespace ArgosAutomation
                             #endregion
 
                             default: // Padrão
+                                await botClient.SendChatActionAsync(
+                                    chatId: ChatId,
+                                    chatAction: ChatAction.Typing,
+                                    cancellationToken: cancellationToken);
                                 await botClient.SendTextMessageAsync(
                                     chatId: ChatId,
                                     text: $"🤖: Esse comando não é permitido nesse chat!",
@@ -441,13 +491,17 @@ namespace ArgosAutomation
                         var dtw = Odbc.dtm.ExecuteQuery(qry);
 
                         //
+                        await botClient.SendChatActionAsync(
+                            chatId: ChatId,
+                            chatAction: ChatAction.Typing,
+                            cancellationToken: cancellationToken);
                         await botClient.SendTextMessageAsync(
-                                    chatId: ChatId,
-                                    text: $"🤖: Claro, {FirstName}! Gerando em alguns segundos começo os envios dos reports.",
-                                    replyToMessageId: MessageId,
-                                    disableNotification: true,
-                                    parseMode: ParseMode.Markdown,
-                                    cancellationToken: cancellationToken);
+                            chatId: ChatId,
+                            text: $"🤖: Claro, {FirstName}! Gerando em alguns segundos começo os envios dos reports.",
+                            replyToMessageId: MessageId,
+                            disableNotification: true,
+                            parseMode: ParseMode.Markdown,
+                            cancellationToken: cancellationToken);
 
                         //
                         if (listGroups.Contains(ChatId))
@@ -498,6 +552,10 @@ namespace ArgosAutomation
                 Console.WriteLine(@$" [{DateTime.Now:dd/MM/yyyy - HH:mm:ss}] UpdateHandler: Individuo sem autorização.");
                 Console.BackgroundColor = ConsoleColor.Black;
                 Console.ForegroundColor = ConsoleColor.Gray;
+                await botClient.SendChatActionAsync(
+                    chatId: ChatId,
+                    chatAction: ChatAction.Typing,
+                    cancellationToken: cancellationToken);
                 await botClient.SendTextMessageAsync(
                     chatId: ChatId,
                     text: "Opa...Parece que não você *não* tem permissões necessárias para falar comigo 🔒. Solicite acesso aos meus administradores na Torre de Controle.",
@@ -506,6 +564,10 @@ namespace ArgosAutomation
                     cancellationToken: cancellationToken);
 
                 //
+                await botClient.SendChatActionAsync(
+                    chatId: ChatId,
+                    chatAction: ChatAction.Typing,
+                    cancellationToken: cancellationToken);
                 await botClient.SendTextMessageAsync(
                     chatId: 5495003005,
                     text: @$"Individuo sem autorização 🔒 - {DateTime.Now}

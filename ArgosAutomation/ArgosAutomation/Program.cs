@@ -116,15 +116,19 @@ namespace ArgosAutomation
             catch (Exception ex)
             {
                 // Tratamento de erros genéricos.
+                await Utilities.botClient.SendChatActionAsync(
+                    chatId: 5495003005,
+                    chatAction: ChatAction.Typing,
+                    cancellationToken: Utilities.cts);
                 await Utilities.botClient.SendTextMessageAsync(
-                chatId: 5495003005,
-                text: @$"*Manipulador de erros acionado* 🪲 - *{DateTime.Now}*
+                    chatId: 5495003005,
+                    text: @$"*Manipulador de erros acionado* 🪲 - *{DateTime.Now}*
 
 *Classe:* Program.cs 🖥
 
 Erro no carregamento dos trabalhos devido a {ex.Message}",
-                parseMode: ParseMode.Markdown,
-                cancellationToken: Utilities.cts);
+                    parseMode: ParseMode.Markdown,
+                    cancellationToken: Utilities.cts);
 
                 Console.BackgroundColor = ConsoleColor.DarkRed;
                 Console.ForegroundColor = ConsoleColor.Gray;
@@ -151,17 +155,21 @@ Erro no carregamento dos trabalhos devido a {ex.Message}
                 Utilities.receiver,
                 cancellationToken: Utilities.cts);
 
+            await Utilities.botClient.SendChatActionAsync(
+                chatId: 5495003005,
+                chatAction: ChatAction.Typing,
+                cancellationToken: Utilities.cts);
             await Utilities.botClient.SendTextMessageAsync(
-                                        chatId: 5495003005,
-                                        text: @$"🤖: *Acabei de ser ligado* 💡
+                chatId: 5495003005,
+                text: @$"🤖: *Acabei de ser ligado* 💡
 
 👤 Usuário: {Environment.UserName}
 💻 Nome da máquina: {Dns.GetHostName()}
 💻 Ambiente: {Environment.GetEnvironmentVariable("ENVIRONMENT_DESCRIPTION", EnvironmentVariableTarget.User)}
 🌐 IP: {Dns.GetHostByName(Dns.GetHostName()).AddressList[1]} - {Environment.UserDomainName}
 🕒 Data e hora: {DateTime.Now}",
-                                        parseMode: ParseMode.Markdown,
-                                        cancellationToken: Utilities.cts);
+                parseMode: ParseMode.Markdown,
+                cancellationToken: Utilities.cts);
 
             //
             Console.ReadKey();

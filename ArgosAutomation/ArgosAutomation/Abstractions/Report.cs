@@ -231,6 +231,10 @@ Erro:
                 // Obtém o arquivo .jpg resultado do método Generate.
                 File = new FileStream(@"C:\Temp\ArgosAutomation\arquivos\imagens\report.jpg", FileMode.Open, FileAccess.Read);
                 PrintPath = InputFile.FromStream(File);
+                await Utilities.botClient.SendChatActionAsync(
+                    chatId: chatId,
+                    chatAction: ChatAction.UploadPhoto,
+                    cancellationToken: Utilities.cts);
                 await Utilities.botClient.SendPhotoAsync(chatId: chatId, photo: PrintPath, caption: Caption, disableNotification: true, parseMode: ParseMode.Markdown);
                 Console.WriteLine(@$" [{DateTime.Now:dd/MM/yyyy - HH:mm:ss}] Report: Report do painel de {ReportName} enviado com êxito.");
                 File.Dispose();
