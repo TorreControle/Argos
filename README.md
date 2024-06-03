@@ -7,17 +7,17 @@
 
 **Automation**
 
-  Aplicação dedicada a fazer divulgação de dados operacionais de maneira automática, é uma aplicação que consiste em tirar capturas de tela (prints) de relatórios no Power BI com dados operacionais e fazer a divulgação via telegram para o usuário. É possivel obter os reports automáticamente em horarios definidos ou fazer a solicitação também!!
+  Aplicação dedicada a fazer divulgação de dados operacionais de maneira automática, é uma aplicação que consiste em tirar capturas de tela (prints) de relatórios no Power BI com dados operacionais e fazer a divulgação via telegram para o usuário. É possivel obter os reports automáticamente em horários definidos ou fazer a solicitação também!!
 
 
 **On Demand**
 
-  Aplicação dedicada a parte mais inteligente do assistente virtual, sendo responsável pela análise de dados orientada a banco de dados (Databricks, Oracle, SQL Server) intergrado ao Chat GPT para criação de texto baseados nos dados obtidos. Possibilitado assim inumeras varieades de comandos, rotinas e funções para gestão de negócios.
+  Aplicação dedicada a parte mais inteligente do assistente virtual, sendo responsável pela análise de dados orientada a banco de dados (Databricks, Oracle, SQL Server) intergrado ao Chat GPT para criação de texto baseados nos dados obtidos. Possibilitado assim inumeras variedades de comandos, rotinas e funções para gestão de negócios.
   
 
 **Dot**
 
-  Aplicação dedicada ao módulo de voz do sistema especialista, tendo todo o poder das aplicações anteriores porém agora podendo agora ser iniciado através de comandos de voz, semelhante a Alexa ou Google Home. Atrávez de processamento de liguagem natural essa aplicação é capaz de capturar uma frase, processar e nos responder claramente através de um áudio. 
+  Aplicação dedicada ao módulo de voz do sistema especialista, tendo todo o poder das aplicações anteriores porém agora podendo agora ser iniciado através de comandos de voz, semelhante a Alexa ou Google Home. Atráves de processamento de linguagem natural essa aplicação é capaz de capturar uma frase, processar, compreender e nos responder claramente através de um áudio. 
 
 ### Ferramentas utilizadas
 <div style="display: inline">
